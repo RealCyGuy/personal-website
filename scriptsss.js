@@ -1,2 +1,3 @@
-function hi()
-	alert('hi')
+function hi() {
+	alert("hi")
+}
