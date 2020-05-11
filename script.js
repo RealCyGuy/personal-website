@@ -20,7 +20,7 @@ function shuffle(array) {
 function colordigit() {
     return (Math.random() * (250 - 200) + 200).toString();
 };
-function links () {
+function links() {
     if ($(window).scrollTop() >= $("#title").innerHeight()) {
         $('#links').addClass('fixed-links');
     }
