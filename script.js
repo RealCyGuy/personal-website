@@ -55,44 +55,8 @@ $(function () {
   );
   links();
   $(".preloader").fadeOut();
-  $("body").contextmenu(function (e) {
-    e.preventDefault();
-  });
-  $(document).mousemove(function (e) {
-    $(".cursor").css({
-      left: e.clientX - $(".cursor").height() / 2,
-      top: e.clientY - $(".cursor").width() / 2,
-    });
-  });
-  $(window)
-    .mouseleave(function () {
-      $(".cursor").hide();
-    })
-    .mouseenter(function () {
-      $(".cursor").show();
-    });
-  $(window)
-    .mousedown(function () {
-      $(".cursor").addClass("cursor-shrink");
-    })
-    .mouseup(function () {
-      $(".cursor").removeClass("cursor-shrink");
-    });
+  $("body").css("overflow", "visible");
   $(window).scroll(links);
-  $(".links li a").hover(
-    function () {
-      $(".cursor").addClass("cursor-grow");
-      $(this).css("color", "white");
-    },
-    function () {
-      $(".cursor").removeClass("cursor-grow");
-      $(this).css("color", color_dark);
-    }
-  );
-  $(".whatsapp").click(function (e) {
-    e.preventDefault();
-    Swal.fire({ title: "no", icon: "error" });
-  });
   function changecolour() {
     setTimeout(changecolour, 2500);
     setTimeout(function () {
