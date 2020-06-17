@@ -33,7 +33,13 @@ function intro() {
       "-=0.2"
     )
     .from(".about", { y: -100, opacity: 0 })
-    .from(".about>*", { opacity: 0, stagger: 0.2 })
+    .from(".about h2", { opacity: 0 })
+    .from(".about p span", {
+      x: gsap.utils.random(-200, 200, 10, true),
+      y: gsap.utils.random(-200, 200, 10, true),
+      opacity: 0,
+      ease: "back.out(1)",
+    })
     .from("footer", { opacity: 0, y: 10 }, "<")
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
   return tl;

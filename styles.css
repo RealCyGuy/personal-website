@@ -26,7 +26,7 @@ body {
   );
   color: var(--text);
   font-family: Raleway, sans-serif;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 .title-container {
   display: flex;
@@ -87,6 +87,9 @@ body {
 .about p {
   margin: 5px;
   text-align: center;
+}
+.about p span {
+  display: inline-block;
 }
 footer {
   display: flex;
