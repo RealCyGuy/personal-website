@@ -42,6 +42,7 @@ body {
 }
 .hi {
   display: inline-block;
+  color: var(--text);
 }
 .letter,
 .period {
@@ -79,4 +80,10 @@ body {
     font-size: 0.8em;
     padding: 7px 2px;
   }
+}
+.zero {
+  opacity: 0;
+}
+.zero.hi {
+  transform: translateX(30);
 }
