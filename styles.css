@@ -83,6 +83,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+.about p {
+  margin: 5px;
+  text-align: center;
+}
 @media (max-width: 426px) {
   .links a {
     font-size: 0.8em;
