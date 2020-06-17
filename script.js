@@ -36,7 +36,8 @@ window.onload = function start() {
         ".links a",
         { x: 50, opacity: 0, stagger: 0.1, duration: 0.3 },
         "+=0.2"
-      );
+      )
+      .from(".about", { y: -100, opacity: 0 });
     return tl;
   }
   var main = gsap.timeline();
