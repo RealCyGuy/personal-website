@@ -16,11 +16,11 @@ function intro() {
     .from(".comma, .im span", { opacity: 0, duration: 0.2, stagger: 0.1 })
     .from(
       ".letter",
-      { y: 5, opacity: 0, stagger: 0.1, ease: "back.out(1.7)" },
+      { y: 5, opacity: 0, stagger: 0.1, ease: "back.out(2)" },
       "+=0.2"
     )
     .from(".period", { y: -100, opacity: 0, ease: "bounce.out" }, "+=0.4")
-    .from(".title p", { opacity: 0, duration: 0.5 })
+    .from(".title p", { opacity: 0, duration: 0.5 }, "-=0.4")
     .from(".title h1, .title p", {
       x: 30,
       stagger: 0.1,
@@ -29,11 +29,13 @@ function intro() {
     .from(".links", { y: 20, opacity: 0 }, "<")
     .from(
       ".links a",
-      { x: 50, opacity: 0, stagger: 0.1, duration: 0.3 },
-      "+=0.2"
+      { x: 50, y: 5, opacity: 0, stagger: 0.1, duration: 0.3 },
+      "-=0.2"
     )
     .from(".about", { y: -100, opacity: 0 })
-    .from(".about>*", { opacity: 0, stagger: 0.2 });
+    .from(".about>*", { opacity: 0, stagger: 0.2 })
+    .from("footer", { opacity: 0, y: 10 }, "<")
+    .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
   return tl;
 }
 var main = gsap.timeline();
