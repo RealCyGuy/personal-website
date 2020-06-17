@@ -25,7 +25,7 @@ body {
     var(--background-secondary)
   );
   color: var(--text);
-  font-family: sans-serif;
+  font-family: Raleway, sans-serif;
 }
 .title-container {
   display: flex;
