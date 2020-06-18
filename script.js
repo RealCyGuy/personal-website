@@ -40,7 +40,7 @@ function intro() {
       y: 20,
       opacity: 0,
       ease: "back.out(4)",
-      stagger: { amount: 0.2, from: "center" },
+      stagger: 0.1,
     })
     .from("footer", { opacity: 0, y: 10 }, "<")
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
