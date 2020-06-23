@@ -12,7 +12,8 @@ console.log("%cHMmmMMmMmMmmMMM!", "font-style: italic; font-size: 40px;");
 // Animation
 function intro() {
   var tl = gsap.timeline({ defaults: { duration: 1 } });
-  tl.from(".hi", { color: "white", duration: 0.3 }, "1.2")
+  tl.set(".about p", { "overflow-y": "hidden" })
+    .from(".hi", { color: "white", duration: 0.3 }, "1.2")
     .from(".comma, .im span", { opacity: 0, duration: 0.2, stagger: 0.1 })
     .from(
       ".letter",
@@ -40,8 +41,9 @@ function intro() {
       y: 20,
       opacity: 0,
       ease: "back.out(4)",
-      stagger: 0.1,
+      stagger: 0.03,
     })
+    .set(".about p", { "overflow-y": "auto" })
     .from("footer", { opacity: 0, y: 10 }, "<")
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
   return tl;

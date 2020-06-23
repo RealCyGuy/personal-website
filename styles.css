@@ -8,7 +8,7 @@
   --background-secondary-accent: #292b2f;
 }
 ::selection {
-  background-color: var(--text-muted);
+  background: var(--text-muted);
 }
 * {
   margin: 0;
@@ -85,7 +85,7 @@ body {
   justify-content: center;
 }
 .about p {
-  margin: 5px;
+  margin: 5px 15px;
   text-align: center;
 }
 .about p span {
@@ -112,5 +112,8 @@ footer .this-version {
   .links a {
     font-size: 0.8em;
     padding: 7px 2px;
+  }
+  .about p {
+    margin: 5px;
   }
 }
