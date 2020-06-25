@@ -56,12 +56,10 @@ function intro() {
     })
     .from(".about", { y: -100, opacity: 0 })
     .from(".about h2", { opacity: 0 })
-    .from(".about p span", {
-      y: 20,
+    .from(".about p", {
+      y: 50,
       opacity: 0,
-      ease: "back.out(4)",
-      stagger: 0.02,
-    })
+    }, "-=0.3")
     .set(".about p", { "overflow-y": "auto" })
     .from("footer", { opacity: 0, y: 10 }, "<")
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
