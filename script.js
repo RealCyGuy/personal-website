@@ -9,10 +9,29 @@ console.log("%chmm...", "font-style: italic; font-size: 10px;");
 console.log("%chmm...", "font-style: italic; font-size: 20px;");
 console.log("%cHMM...", "font-style: italic; font-size: 30px;");
 console.log("%cHMmmMMmMmMmmMMM!", "font-style: italic; font-size: 40px;");
+// Form
+$(function () {
+  $(".toggleform").click(function (e) {
+    e.preventDefault();
+    $(".popup").fadeToggle();
+  });
+  $("form").submit(function (e) {
+    e.preventDefault();
+
+    var $form = $(this);
+    $.post($form.attr("action"), $form.serialize()).then(function (e) {
+      alert("Thank you!");
+      console.log(e);
+      $(".popup").fadeOut();
+    });
+  });
+});
 // Animation
 function intro() {
   var tl = gsap.timeline({ defaults: { duration: 1 } });
-  tl.from(".hi", { color: "white", duration: 0.3 }, "1.2")
+  tl.set(".about p", { "overflow-y": "hidden" })
+    .set(".contactbutton", { display: "block" })
+    .from(".hi", { color: "white", duration: 0.3 }, "1.2")
     .from(".comma, .im span", { opacity: 0, duration: 0.2, stagger: 0.1 })
     .from(
       ".letter",
@@ -26,6 +45,7 @@ function intro() {
       stagger: 0.1,
       ease: "elastic.out(1, 0.75)",
     })
+    .from(".contactbutton", { opacity: 0 }, "<0.28")
     .from(".links", { y: 20, opacity: 0 }, "<")
     .from(".links a", {
       "padding-top": "20px",
@@ -40,8 +60,9 @@ function intro() {
       y: 20,
       opacity: 0,
       ease: "back.out(4)",
-      stagger: 0.1,
+      stagger: 0.02,
     })
+    .set(".about p", { "overflow-y": "auto" })
     .from("footer", { opacity: 0, y: 10 }, "<")
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
   return tl;

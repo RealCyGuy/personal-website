@@ -6,14 +6,17 @@
   --background-primary: #36393f;
   --background-secondary: #2f3136;
   --background-secondary-accent: #292b2f;
+  --button: #727171;
+  --button-accent: #565758;
 }
 ::selection {
-  background-color: var(--text-muted);
+  background: var(--text-muted);
 }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Raleway, sans-serif;
 }
 html,
 body {
@@ -25,8 +28,87 @@ body {
     var(--background-secondary)
   );
   color: var(--text);
-  font-family: Raleway, sans-serif;
   overflow: hidden;
+}
+.popup {
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+form {
+  width: 400px;
+  padding: 10px 50px;
+  border-radius: 10px;
+  background-color: var(--background-secondary);
+  border: 2px solid grey;
+}
+form .text {
+  margin: 5px 0;
+}
+form h2 {
+  font-size: 2em;
+}
+form p {
+  font-size: 12px;
+}
+form hr {
+  margin: 8px 0;
+  height: 2px;
+  background: white;
+  border: none;
+}
+form input,
+form textarea {
+  width: 100%;
+  padding: 3px;
+  margin: 2px 0 7px;
+}
+form textarea {
+  resize: none;
+}
+form .buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+form button {
+  cursor: pointer;
+  padding: 6px;
+  width: 40%;
+  margin: 3px 0;
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+}
+form button:nth-of-type(1) {
+  background-color: green;
+  color: var(--text);
+}
+form button:nth-of-type(2) {
+  background-color: var(--text-muted);
+  color: var(--background-secondary-accent);
+}
+.contactbutton {
+  background-color: var(--button);
+  display: none;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  z-index: 100;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  border: none;
+  border-bottom: 7px solid var(--button-accent);
+  padding: 8px 14px;
+  transition: all 0.1s ease-out;
+}
+.contactbutton:hover {
+  border-width: 2px;
+  transform: translate(-50%, 6px);
 }
 .title-container {
   display: flex;
@@ -84,8 +166,11 @@ body {
   align-items: center;
   justify-content: center;
 }
+.about h2 {
+  margin: 3px;
+}
 .about p {
-  margin: 5px;
+  margin: 5px 15px;
   text-align: center;
 }
 .about p span {
@@ -112,5 +197,11 @@ footer .this-version {
   .links a {
     font-size: 0.8em;
     padding: 7px 2px;
+  }
+  .about p {
+    margin: 5px;
+  }
+  form {
+    width: 300px;
   }
 }
