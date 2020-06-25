@@ -59,6 +59,7 @@ function intro() {
     .from(".about p", {
       y: 50,
       opacity: 0,
+      duration: 0.7
     }, "-=0.3")
     .set(".about p", { "overflow-y": "auto" })
     .from("footer", { opacity: 0, y: 10 }, "<")
