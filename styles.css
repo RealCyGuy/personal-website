@@ -44,6 +44,7 @@ form {
   border-radius: 10px;
   background-color: var(--background-secondary);
   border: 2px solid grey;
+  box-shadow: 0 0 7px #888888;
 }
 form .text {
   margin: 5px 0;
@@ -203,5 +204,6 @@ footer .this-version {
   }
   form {
     width: 300px;
+    padding: 10px 20px;
   }
 }
