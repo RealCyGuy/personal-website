@@ -28,7 +28,7 @@ $(function () {
 });
 // Animation
 function intro() {
-  var tl = gsap.timeline({ defaults: { duration: 1 } });
+  var tl = gsap.timeline({ defaults: { duration: 1.4, ease: "power1.in" } });
   tl.set(".about p", { "overflow-y": "hidden" })
     .set(".contactbutton", { display: "block" })
     .from(".hi", { color: "white", duration: 0.3 }, "1.2")
@@ -38,31 +38,41 @@ function intro() {
       { y: 5, opacity: 0, stagger: 0.1, ease: "back.out(2)" },
       "+=0.2"
     )
-    .from(".period", { y: -100, opacity: 0, ease: "bounce.out" }, "+=0.4")
+    .from(".period", { y: -100, opacity: 0, duration: 1, ease: "bounce.out" }, "-=0.2")
     .from(".title p", { opacity: 0, duration: 0.5, y: -5 }, "-=0.4")
     .from(".title h1, .title p", {
       x: 30,
       stagger: 0.1,
       ease: "elastic.out(1, 0.75)",
     })
-    .from(".contactbutton", { opacity: 0 }, "<0.28")
-    .from(".links", { y: 20, opacity: 0 }, "<")
-    .from(".links a", {
-      "padding-top": "20px",
-      "padding-bottom": "20px",
-      opacity: 0,
-      stagger: { amount: 0.2, from: "center" },
-      duration: 0.2,
-    })
-    .from(".about", { y: -100, opacity: 0 })
-    .from(".about h2", { opacity: 0 })
-    .from(".about p", {
-      y: 50,
-      opacity: 0,
-      duration: 0.7
-    }, "-=0.3")
-    .set(".about p", { "overflow-y": "auto" })
-    .from("footer", { opacity: 0, y: 10 }, "<")
+    .from(".links", { y: 20, opacity: 0 }, "<0.28")
+    .from(".about", { y: -100, opacity: 0 }, "<")
+    .from(".about h2", { opacity: 0 }, "<")
+    .from(
+      ".about p",
+      {
+        y: 50,
+        opacity: 0,
+        duration: 0.7,
+      },
+      "-=0.3"
+    )
+    .set(".about p", { "overflow-y": "auto" }, "<")
+    .from("footer", { opacity: 0, y: 10, ease: "none" }, "<")
+    .from(
+      ".links a",
+      {
+        "padding-top": "20px",
+        "padding-bottom": "20px",
+        opacity: 0,
+        rotation: 5,
+        stagger: { amount: 0.2, from: "center" },
+        duration: 0.2,
+        clearProps: "paddingTop,paddingBottom",
+      },
+      "<"
+    )
+    .from(".contactbutton", { opacity: 0, scale: 2, duration: 0.5, clearProps: "transform" }, "<")
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
   return tl;
 }
