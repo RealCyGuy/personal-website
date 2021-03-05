@@ -38,7 +38,11 @@ function intro() {
       { y: 5, opacity: 0, stagger: 0.1, ease: "back.out(2)" },
       "+=0.2"
     )
-    .from(".period", { y: -100, opacity: 0, duration: 1, ease: "bounce.out" }, "-=0.2")
+    .from(
+      ".period",
+      { y: -100, opacity: 0, duration: 1, ease: "bounce.out" },
+      "-=0.2"
+    )
     .from(".title p", { opacity: 0, duration: 0.5, y: -5 }, "-=0.4")
     .from(".title h1, .title p", {
       x: 30,
@@ -72,9 +76,29 @@ function intro() {
       },
       "<"
     )
-    .from(".contactbutton", { opacity: 0, scale: 2, duration: 0.5, clearProps: "transform" }, "<")
+    .from(
+      ".contactbutton",
+      { opacity: 0, scale: 2, duration: 0.5, clearProps: "transform" },
+      "<"
+    )
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
   return tl;
 }
 var main = gsap.timeline();
 main.add(intro());
+// Meny
+Meny.create({
+  menuElement: document.querySelector(".meny"),
+  contentsElement: document.querySelector(".contents"),
+  position: "left",
+  height: 200,
+  width: 260,
+  angle: 30,
+  threshold: 40,
+  overlap: 0,
+  transitionDuration: "0.5s",
+  transitionEasing: "ease",
+  gradient: "rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.65) 100%)",
+  mouse: true,
+  touch: true,
+});

@@ -6,8 +6,10 @@
   --background-primary: #36393f;
   --background-secondary: #2f3136;
   --background-secondary-accent: #292b2f;
-  --button: #727171;
-  --button-accent: #565758;
+  --button: #ff7f50;
+  --button-accent: #d34f20;
+  --link: #d34f20;
+  --link-accent: #ff7f50;
 }
 ::selection {
   background: var(--text-muted);
@@ -29,6 +31,9 @@ body {
   );
   color: var(--text);
   overflow: hidden;
+}
+.contents {
+  height: 100vh;
 }
 .popup {
   position: fixed;
@@ -139,6 +144,12 @@ form button:nth-of-type(2) {
   justify-content: space-around;
   background-color: var(--background-secondary);
   flex-wrap: wrap;
+  list-style: none;
+}
+.links li {
+  width: 20%;
+  display: flex;
+  justify-content: center;
 }
 .links a {
   color: var(--text-primary);
@@ -152,8 +163,8 @@ form button:nth-of-type(2) {
   text-decoration: none;
   transition: all 0.4s;
   text-align: center;
+  display: block;
 }
-
 .links a:hover {
   background-size: 4px 50px;
   color: black;
@@ -206,4 +217,36 @@ footer .this-version {
     width: 300px;
     padding: 10px 20px;
   }
+}
+.meny {
+  overflow: auto;
+  padding: 20px;
+  display: none;
+}
+.meny h2 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+.meny ul {
+  margin-top: 10px;
+}
+.meny ul li {
+  list-style: none;
+  padding: 3px 0 3px 10px;
+  display: inline-block;
+  width: 240px;
+  font-size: 16px;
+}
+.meny ul li::before {
+  content: "-";
+  margin-right: 5px;
+  color: var(--text-muted);
+}
+.meny ul li a {
+  color: var(--link);
+  text-decoration: none;
+  transition: all 0.1s;
+}
+.meny ul li a:hover {
+  color: var(--link-accent);
 }
