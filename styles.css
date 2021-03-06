@@ -219,7 +219,7 @@ footer .this-version {
   }
 }
 .meny {
-  overflow: auto;
+  overflow-y: auto;
   padding: 20px;
   display: none;
 }
