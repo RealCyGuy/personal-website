@@ -250,3 +250,24 @@ footer .this-version {
 .meny ul li a:hover {
   color: var(--link-accent);
 }
+.label {
+  transform: translateY(-50%) rotate(270deg);
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  z-index: 3;
+  transition: opacity 0.5s;
+  cursor: pointer;
+}
+.label p {
+  color: var(--text);
+}
+.label svg {
+  display: block;
+  margin: auto;
+  margin-top: 2px;
+}
+.meny-active .label {
+  opacity: 0;
+  cursor: default;
+}

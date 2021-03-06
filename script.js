@@ -81,7 +81,8 @@ function intro() {
       { opacity: 0, scale: 2, duration: 0.5, clearProps: "transform" },
       "<"
     )
-    .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3");
+    .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3")
+    .from(".label", { scale: 0, duration: 0.3}, "<");
   return tl;
 }
 var main = gsap.timeline();
