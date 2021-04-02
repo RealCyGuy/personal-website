@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: realcyguy.netlify.app
+Token: 48c478af4224f6f5da3828f140db27d9d8a4d6ebbaa6141fad037a09ab86fd2c
