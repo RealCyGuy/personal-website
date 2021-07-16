@@ -1,7 +1,9 @@
-// Polite console greeting
-console.log(
-  "%cHi.",
-  "color: blue; font-family:monospace; font-size: 40px; font-weight: bolder; text-shadow: 0px 0px 10px gray;"
+-(
+  // Polite console greeting
+  console.log(
+    "%cHi.",
+    "color: blue; font-family:monospace; font-size: 40px; font-weight: bolder; text-shadow: 0px 0px 10px gray;"
+  )
 );
 console.error("What are you doing in the console?");
 console.log("%chmm...", "font-style: italic; font-size: 5px;");
@@ -9,8 +11,8 @@ console.log("%chmm...", "font-style: italic; font-size: 10px;");
 console.log("%chmm...", "font-style: italic; font-size: 20px;");
 console.log("%cHMM...", "font-style: italic; font-size: 30px;");
 console.log("%cHMmmMMmMmMmmMMM!", "font-style: italic; font-size: 40px;");
-// Form
 $(function () {
+  // Form
   $(".toggleform").click(function (e) {
     e.preventDefault();
     $(".popup").fadeToggle();
@@ -23,6 +25,28 @@ $(function () {
       alert("Thank you!");
       console.log(e);
       $(".popup").fadeOut();
+    });
+  });
+  // Search bar
+  const search = $("#search");
+  search.keyup(function (e) {
+    var term = search.val().toLowerCase();
+    $(".meny ul li").each(function () {
+      var keywords = $(this).find("a").attr("keywords").split(" ") || [];
+      var hasKeyword = false;
+      for (let keyword of keywords) {
+        if (keyword.includes(term)) {
+          hasKeyword = true;
+        }
+      }
+      if (
+        $(this).find("a").text().toLowerCase().includes(term) ||
+        hasKeyword
+      ) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
     });
   });
 });
@@ -82,7 +106,7 @@ function intro() {
       "<"
     )
     .from("footer>*", { opacity: 0, duration: 0.5 }, "-=0.3")
-    .from(".label", { scale: 0, duration: 0.3}, "<");
+    .from(".label", { scale: 0, duration: 0.3 }, "<");
   return tl;
 }
 var main = gsap.timeline();

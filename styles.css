@@ -219,7 +219,7 @@ footer .this-version {
   }
 }
 .meny {
-  overflow-y: auto;
+  overflow: hidden auto;
   padding: 20px;
   display: none;
 }
@@ -282,4 +282,16 @@ footer .this-version {
 .meny-active .label {
   opacity: 0;
   cursor: default;
+}
+#search {
+  width: 100%;
+  outline: none;
+  background: var(--background-secondary-accent);
+  border: none;
+  color: var(--text);
+  padding: 5px;
+}
+#search::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
 }
