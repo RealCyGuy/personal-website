@@ -31,18 +31,23 @@ $(function () {
   const search = $("#search");
   search.keyup(function (e) {
     var term = search.val().toLowerCase();
+    var terms = term.split(" ")
     $(".meny ul li").each(function () {
+      var name = $(this).find("a").text().toLowerCase()
       var keywords = $(this).find("a").attr("keywords").split(" ") || [];
-      var hasKeyword = false;
-      for (let keyword of keywords) {
-        if (keyword.includes(term)) {
-          hasKeyword = true;
+      var hasKeyword = true;
+      for (let t of terms) {
+        let hasThisKeyword = false;
+        for (let keyword of keywords) {
+          if (keyword.includes(t)) {
+            hasThisKeyword = true;
+          }
+        }
+        if (!hasThisKeyword && !name.includes(t)) {
+          hasKeyword = false;
         }
       }
-      if (
-        $(this).find("a").text().toLowerCase().includes(term) ||
-        hasKeyword
-      ) {
+      if (hasKeyword) {
         $(this).show();
       } else {
         $(this).hide();
