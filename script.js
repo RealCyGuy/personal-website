@@ -45,6 +45,7 @@ $(function () {
         }
         if (!hasThisKeyword && !name.includes(t)) {
           hasKeyword = false;
+          break;
         }
       }
       if (hasKeyword) {
