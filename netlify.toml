@@ -1,4 +1,3 @@
 [build]
   command = "yarn run build"
   publish = "dist"
-  NODE_OPTIONS = "--openssl-legacy-provider"
