@@ -1,0 +1,18 @@
+<template>
+  <div class="mt-16">
+    <h1 class="text-6xl font-black">Projects</h1>
+    <div v-for="project in data">
+      <h2>{{ project.title }}</h2>
+      <p>{{ project.description }}</p>
+    </div>
+    <p>{{ data }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+useHead({
+  title: "Projects"
+});
+
+const { data } = await useAsyncData('projects', () => queryContent('/projects/').find())
+</script>

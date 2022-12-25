@@ -1,8 +1,6 @@
 <template>
   <div>
     <h1>(wip)</h1>
-    <p>Lorem <NuxtLink to="https://google.com">ipsum</NuxtLink> dolor sit amet, consectetur adipisicing elit. Sequi, hic voluptas. Porro laborum magni, beatae, reprehenderit veritatis aperiam quis totam deleniti corporis, quos quo laboriosam odit amet a placeat eius.</p>
-    <p>Dolorem illum culpa tenetur ratione doloremque soluta ipsam alias enim nulla ipsum est at, voluptas aliquam ea quidem reprehenderit? Corporis eaque ipsa provident libero reprehenderit quidem. Obcaecati similique consectetur ullam!</p>
     <p>Quae beatae nulla illum enim libero rerum adipisci earum vero fugit voluptate ducimus quo, ad minima error culpa officia excepturi. Nostrum maxime itaque natus cupiditate modi totam officiis nisi voluptates!</p>
     <p>Quam autem voluptate, facere enim placeat omnis at tenetur saepe sit debitis corrupti eius vel nesciunt blanditiis quo, dolorum, nam cum laborum quod. Quae nulla laborum non itaque natus magnam!</p>
     <p>Sint iste nesciunt dicta eius, minima, excepturi voluptatum harum ipsam possimus sed, unde optio perspiciatis ex. Error, porro! Accusamus animi dignissimos sed illo deleniti cupiditate obcaecati corporis temporibus. Odio, a!</p>
@@ -63,4 +61,10 @@
     <p>Ad in quisquam est quibusdam id, quas rerum itaque nisi, voluptates recusandae, voluptate saepe cum praesentium. Minus earum molestias nesciunt illum, similique ratione voluptate totam odio fugiat dolores? Sequi, aliquam!</p>
   </div>
 </template>
+
+<script setup lang="ts">
+useHead({
+  title: "Social"
+});
+</script>
   

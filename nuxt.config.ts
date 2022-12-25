@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss']
-})
+  modules: ["@nuxt/content", "@nuxtjs/tailwindcss", "@nuxtjs/google-fonts"],
+  googleFonts: {
+    families: { "Hanken+Grotesk": [400, 700, 900] },
+  },
+});
