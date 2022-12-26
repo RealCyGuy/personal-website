@@ -1,6 +1,6 @@
 <template>
   <div class="mt-16">
-    <h1 class="text-6xl font-black">Projects</h1>
+    <h1>Projects</h1>
     <div v-for="project in data">
       <h2>{{ project.title }}</h2>
       <p>{{ project.description }}</p>

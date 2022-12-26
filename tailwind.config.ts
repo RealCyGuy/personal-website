@@ -1,4 +1,5 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
+const formKitTailwind = require('@formkit/themes/tailwindcss');
 
 export default <Partial<Config>>{
   theme: {
@@ -7,5 +8,7 @@ export default <Partial<Config>>{
         sans: ['Hanken Grotesk', 'sans-serif'],
       }
     }
-  }
+  },
+  plugins: [formKitTailwind],
+  content: ["formkit.config.ts"]
 }

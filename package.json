@@ -13,6 +13,8 @@
     "nuxt": "3.0.0"
   },
   "dependencies": {
+    "@formkit/nuxt": "^1.0.0-beta.12",
+    "@formkit/themes": "^1.0.0-beta.12",
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "motion": "^10.15.3"
   }
