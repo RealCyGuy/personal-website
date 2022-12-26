@@ -28,7 +28,7 @@ export default {
         ...text,
         input:
           text.input +
-          " min-h-[8rem] block w-full h-32 py-2 border-none text-base text-gray-700 placeholder-gray-400 focus:shadow-outline",
+          " min-h-[8rem] block w-full h-32 py-2 border-none text-base placeholder-gray-400 focus:shadow-outline",
       },
       submit: {
         ...button,
