@@ -5,6 +5,7 @@
       <div class="mx-12 md:mx-20">
         <slot />
       </div>
+      <Footer />
     </div>
   </div>
 </template>

@@ -1,8 +1,7 @@
 <template>
   <div class="mt-16 pb-10">
     <h1 class="mb-5">Contact</h1>
-    <h2 class="mb-7">To reach me, you can try messaging on one of my <NuxtLink to="/social"
-        class="underline duration-100 hover:text-pink-500">socials</NuxtLink> or fill out this form below.</h2>
+    <h2 class="mb-7">To reach me, you can try messaging on one of my <SimpleLink to="/social">socials</SimpleLink> or fill out this form below.</h2>
     <div class="max-w-3xl">
       <FormKit type="form" netlify @submit="submit">
         <FormKit type="text" name="name" validation="required" label="Name" placeholder="John Doe" />
