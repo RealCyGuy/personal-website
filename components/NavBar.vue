@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex justify-between px-5 py-8 text-lg sticky w-full top-0 bg-slate-900 overflow-hidden md:px-10"
+  <nav class="flex justify-between px-5 py-8 text-lg sticky w-full top-0 bg-slate-900 overflow-hidden md:px-10 z-20"
     :class="[scrollY > 50 ? '-translate-y-full duration-500' : 'duration-200']">
     <NuxtLink to="/" class="px-3 hover-underline">
       <span class="animated-underline block">Cyrus Yip</span>
