@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-16 pb-10">
+  <div class="pb-10">
     <h1 class="mb-5">Contact</h1>
     <h2 class="mb-7">To reach me, you can try messaging on one of my <SimpleLink to="/social">socials</SimpleLink> or fill out this form below.</h2>
     <div class="max-w-3xl">
