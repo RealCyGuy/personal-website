@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="mb-5">Social</h1>
-    <h2 class="mb-7">Here are some links. Categories: <SimpleLink to="#developer_things">developer things</SimpleLink>,
+    <h2 class="mb-5">Here are some links. Categories: <SimpleLink to="#developer_things">developer things</SimpleLink>,
       <SimpleLink to="#interests">interests</SimpleLink>, <span class="whitespace-nowrap">
         <SimpleLink to="#social_media">social media</SimpleLink>.
       </span>
