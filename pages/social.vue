@@ -21,6 +21,8 @@
         prefix="@" />
       <SocialLink to="https://monkeytype.com/profile/realcyguy" title="Monkeytype" username="realcyguy"
         icon="monkeytype" />
+      <SocialLink to="https://en.wikipedia.org/wiki/User:RealCyGuy" title="Wikipedia" username="RealCyGuy"
+        icon="wikipedia" prefix="User:" />
     </SocialSection>
     <SocialSection title="Social media">
       <SocialLink to="https://www.youtube.com/@cy_" title="Youtube" username="cy_" icon="youtube" prefix="@" />

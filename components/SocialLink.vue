@@ -16,7 +16,7 @@
     <img :src="icons[icon]" alt="" class="w-8 h-8 object-contain mr-3">
     <div class="flex flex-col text-sm" :id="icon">
       <span class="font-bold">{{ title }}</span>
-      <span class="z-10 select-all">
+      <span class="z-10 select-all w-min">
         <span v-if="prefix" class="opacity-90">{{ prefix }}</span>
         <span>{{ username }}</span>
       </span>
