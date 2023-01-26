@@ -7,16 +7,16 @@
     <ol
       class="flex fixed h-screen w-screen left-0 top-0 flex-col bg-slate-900 md:bg-transparent md:flex-row md:h-auto md:w-auto md:static md:flex md:opacity-100 md:visible justify-center list-[decimal-leading-zero] list-inside marker:text-pink-400 text-pink-500 duration-500 items-center"
       :class="[toggled ? '' : 'invisible opacity-0 top-[-100%]']">
-      <NuxtLink to="/" class="px-3 hover:text-pink-400 mb-10 md:mb-0">
+      <NuxtLink to="/" class="px-3 hover:text-pink-400 duration-500 mb-10 md:mb-0">
         <li class="animated-underline duration-50">About</li>
       </NuxtLink>
-      <NuxtLink to="/projects" class="px-3 hover:text-pink-400 mb-10 md:mb-0">
+      <NuxtLink to="/projects" class="px-3 hover:text-pink-400 duration-500 mb-10 md:mb-0">
         <li class="animated-underline duration-50">Projects</li>
       </NuxtLink>
-      <NuxtLink to="/social" class="px-3 hover:text-pink-400 mb-10 md:mb-0">
+      <NuxtLink to="/social" class="px-3 hover:text-pink-400 duration-500 mb-10 md:mb-0">
         <li class="animated-underline duration-50">Social</li>
       </NuxtLink>
-      <NuxtLink to="/contact" class="px-3 hover:text-pink-400">
+      <NuxtLink to="/contact" class="px-3 hover:text-pink-400 duration-500">
         <li class="animated-underline duration-50">Contact</li>
       </NuxtLink>
     </ol>
