@@ -11,7 +11,7 @@
   </NuxtLink>
 </template> -->
 <template>
-  <div class="flex py-1 px-3 items-center relative">
+  <div class="flex py-1 items-center relative">
     <NuxtLink :to="to" class="absolute w-full h-full top-0" target="_blank" :aria-labelledby="icon" />
     <img :src="icons[icon]" alt="" class="w-8 h-8 object-contain mr-3">
     <div class="flex flex-col text-sm" :id="icon">

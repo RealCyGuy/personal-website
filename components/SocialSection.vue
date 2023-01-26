@@ -1,7 +1,7 @@
 <template>
   <div class="mb-7">
     <h3 class="mb-4" :id="title.toLowerCase().replace(' ', '_')">{{ title }}</h3>
-    <div class="grid justify-evenly grid-cols-[repeat(auto-fill,_15rem)] gap-4">
+    <div class="grid justify-evenly grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] gap-4">
       <slot />
     </div>
   </div>
