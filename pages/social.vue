@@ -9,7 +9,8 @@
     <SocialSection title="Developer things">
       <SocialLink to="https://github.com/realcyguy" title="GitHub" username="RealCyGuy" icon="github" prefix="@" />
       <SocialLink to="https://gitlab.com/realcyguy" title="GitLab" username="RealCyGuy" icon="gitlab" prefix="@" />
-      <SocialLink to="https://g.dev/cyrus" title="Google Developers" username="cyrus" icon="googledevelopers" />
+      <SocialLink to="https://g.dev/cyrus" title="Google Developers" username="cyrus" icon="googledevelopers"
+        prefix="u/" />
       <SocialLink to="https://stackoverflow.com/users/13683643/cyrus" title="Stack Overflow" username="Cyrus"
         icon="stackoverflow" />
       <SocialLink to="https://realcyguy.itch.io" title="Itch.io" username="realcyguy" icon="itchio" />
@@ -39,4 +40,14 @@
 useHead({
   title: "Social"
 });
+
+// workaround for https://github.com/vuejs/core/issues/5844
+// animateSocial gets called twice when navigated to
+definePageMeta({
+  pageTransition: {
+    onEnter: animateSocial
+  }
+});
+
+onMounted(animateSocial);
 </script>
