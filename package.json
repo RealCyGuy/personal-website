@@ -10,7 +10,8 @@
   "devDependencies": {
     "@nuxt/content": "^2.3.0",
     "@nuxtjs/tailwindcss": "^6.2.0",
-    "nuxt": "3.0.0"
+    "nuxt": "3.0.0",
+    "prettier": "2.8.3"
   },
   "dependencies": {
     "@formkit/nuxt": "^1.0.0-beta.12",

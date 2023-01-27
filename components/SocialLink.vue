@@ -12,8 +12,13 @@
 </template> -->
 <template>
   <div class="social-link flex py-1 items-center relative opacity-0">
-    <NuxtLink :to="to" class="absolute w-full h-full top-0" target="_blank" :aria-labelledby="icon" />
-    <img :src="icons[icon]" alt="" class="w-8 h-8 object-contain mr-3">
+    <NuxtLink
+      :to="to"
+      class="absolute w-full h-full top-0"
+      target="_blank"
+      :aria-labelledby="icon"
+    />
+    <img :src="icons[icon]" alt="" class="w-8 h-8 object-contain mr-3" />
     <div class="flex flex-col text-sm" :id="icon">
       <span class="font-bold">{{ title }}</span>
       <span class="z-10 select-all w-min">
@@ -24,11 +29,10 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { filename } from 'pathe/utils';
+import { filename } from "pathe/utils";
 
-const glob = import.meta.glob('~/assets/icons/*', { eager: true });
+const glob = import.meta.glob("~/assets/icons/*", { eager: true });
 const icons = Object.fromEntries(
   Object.entries(glob).map(([key, value]) => [filename(key), value.default])
 );

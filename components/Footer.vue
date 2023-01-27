@@ -2,11 +2,15 @@
   <footer>
     <div class="py-16 flex justify-center flex-col items-center">
       <p class="mb-4">
-        &copy; {{ year }} <SimpleLink to="https://realcyguy.netlify.app">Cyrus Yip</SimpleLink>. All
-        rights reserved.
+        &copy; {{ year }}
+        <SimpleLink to="https://realcyguy.netlify.app">Cyrus Yip</SimpleLink>.
+        All rights reserved.
       </p>
       <p class="mb-4">
-        Source code on <SimpleLink to="https://github.com/RealCyGuy/personal-website/tree/v4">GitHub</SimpleLink>.
+        Source code on
+        <SimpleLink to="https://github.com/RealCyGuy/personal-website/tree/v4"
+          >GitHub</SimpleLink
+        >.
       </p>
       <p>
         <SimpleLink to="https://v1--realcyguy.netlify.app">v1</SimpleLink> -

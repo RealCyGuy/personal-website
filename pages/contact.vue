@@ -1,13 +1,33 @@
 <template>
   <div class="pb-10">
     <h1 class="mb-5">Contact</h1>
-    <h2 class="mb-7">To reach me, you can try messaging on one of my <SimpleLink to="/social">socials</SimpleLink> or fill out this form below.</h2>
+    <h2 class="mb-7">
+      To reach me, you can try messaging on one of my
+      <SimpleLink to="/social">socials</SimpleLink> or fill out this form below.
+    </h2>
     <div class="max-w-3xl">
       <FormKit type="form" netlify @submit="submit">
-        <FormKit type="text" name="name" validation="required" label="Name" placeholder="John Doe" />
-        <FormKit type="email" name="email" validation="required|email" label="Email" placeholder="email@example.com" />
-        <FormKit type="textarea" name="message" validation="required" label="Message"
-          placeholder="Hey, Cyrus! Just ran across your website and I love your work. I just wanted to reach to you about your car's extended warranty." />
+        <FormKit
+          type="text"
+          name="name"
+          validation="required"
+          label="Name"
+          placeholder="John Doe"
+        />
+        <FormKit
+          type="email"
+          name="email"
+          validation="required|email"
+          label="Email"
+          placeholder="email@example.com"
+        />
+        <FormKit
+          type="textarea"
+          name="message"
+          validation="required"
+          label="Message"
+          placeholder="Hey, Cyrus! Just ran across your website and I love your work. I just wanted to reach to you about your car's extended warranty."
+        />
       </FormKit>
     </div>
   </div>
@@ -15,21 +35,22 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Contact"
+  title: "Contact",
 });
 
 function submit(data: Record<string, string>) {
   fetch("/", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(data).toString()
+    body: new URLSearchParams(data).toString(),
   })
     .then(() => {
-      const button = document.querySelector("[type=submit]") as HTMLButtonElement;
+      const button = document.querySelector(
+        "[type=submit]"
+      ) as HTMLButtonElement;
       button.textContent = "Submitted!";
       button.disabled = true;
     })
     .catch((error) => alert(error));
 }
 </script>
-  

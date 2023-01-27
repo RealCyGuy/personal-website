@@ -11,8 +11,10 @@
 
 <script setup lang="ts">
 useHead({
-  title: "Projects"
+  title: "Projects",
 });
 
-const { data } = await useAsyncData('projects', () => queryContent('/projects/').find())
+const { data } = await useAsyncData("projects", () =>
+  queryContent("/projects/").find()
+);
 </script>
