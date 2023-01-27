@@ -22,7 +22,7 @@ onMounted(() => {
 .page-leave-active,
 .page-enter-active h1,
 .page-leave-active h1 {
-  @apply duration-500;
+  @apply duration-500 ease-in-out;
 }
 
 .page-enter-from,
@@ -31,10 +31,10 @@ onMounted(() => {
 }
 
 .page-enter-from h1 {
-  @apply -translate-x-full;
+  @apply -translate-x-32;
 }
 
 .page-leave-to h1 {
-  @apply translate-x-full;
+  @apply translate-x-64;
 }
 </style>
