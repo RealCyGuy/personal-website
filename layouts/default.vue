@@ -1,8 +1,10 @@
 <template>
-  <div class="bg-slate-900 text-pink-400 min-h-screen overflow-x-hidden">
+  <div
+    class="bg-slate-900 text-pink-400 min-h-screen overflow-x-hidden selection:bg-pink-600 selection:bg-opacity-40"
+  >
     <div :style="[mounted ? '' : 'display: none']">
       <NavBar />
-      <div class="mx-12 md:mx-20 mt-8 md:mt-16 eoverflow-x-hidden">
+      <div class="mx-8 sm:mx-12 md:mx-20 mt-8 md:mt-16">
         <slot />
       </div>
       <Footer />

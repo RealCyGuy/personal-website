@@ -1,0 +1,7 @@
+title: random-lichess
+description: Lichess bot that plays random moves.
+tags: [Python]
+date: 2021-07-09
+links:
+  website: https://lichess.org/@/GrandmasterRandom
+  github: realcyguy/random-lichess

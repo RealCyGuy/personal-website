@@ -1,0 +1,8 @@
+title: Personal Website v4
+description: This website.
+tags: [HTML, CSS, Typescript, Nuxt, Tailwind CSS]
+# date: 2022-12-12
+date: 2023-01-01
+links:
+  website: /
+  github: realcyguy/personal-website/tree/v4

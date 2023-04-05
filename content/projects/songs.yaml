@@ -1,0 +1,7 @@
+title: songs
+description: A website for my song playlist.
+tags: [HTML, CSS, Javascript, Vue, Tailwind CSS]
+date: 2021-12-05
+links:
+  website: https://songsyt.netlify.app
+  github: realcyguy/songs

@@ -1,0 +1,6 @@
+title: cute bot
+description: Discord bot that pulls animal images from a few apis.
+tags: [discord.py, Python]
+date: 2020-04-26
+links:
+  github: realcyguy/cute-bot

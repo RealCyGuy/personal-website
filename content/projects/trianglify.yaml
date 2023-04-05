@@ -1,0 +1,7 @@
+title: Trianglify Generator
+description: Web app for generating trianglify.js images.
+tags: [HTML, CSS, Javascript]
+date: 2020-05-20
+links:
+  website: https://trianglify.netlify.app
+  github: realcyguy/trianglify-generator

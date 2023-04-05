@@ -1,0 +1,7 @@
+title: magic8ball
+description: Python library with some Magic 8 Ball responses.
+tags: [Python]
+date: 2020-01-09
+links:
+  pypi: magic8ball
+  github: realcyguy/magic8ball

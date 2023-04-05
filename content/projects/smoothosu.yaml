@@ -1,0 +1,7 @@
+title: smoothosu
+description: CLI tool for making smooth osu! cursors.
+tags: [Javascript]
+date: 2021-03-30
+links:
+  npm: smoothosu
+  github: realcyguy/smoothosu

@@ -1,0 +1,6 @@
+title: hutaoartifacts
+description: Compare Hu Tao artifact stats with OCR.
+tags: [Python, PaddleOCR]
+date: 2021-11-20
+links:
+  github: realcyguy/hutaoartifacts

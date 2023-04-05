@@ -1,0 +1,7 @@
+title: iWantToCountFromOne.js
+description: A (joke) library for one-based indexing in Javascript.
+tags: [Javascript, docsify]
+date: 2020-05-05
+links:
+  website: https://iwanttocountfromone.js.org
+  github: realcyguy/iwanttocountfromone.js

@@ -1,0 +1,7 @@
+title: supashare
+description: Serverless file sharing.
+tags: [Svelte, SvelteKit, HTML, CSS, Tailwind CSS, Javascript, Supabase]
+date: 2021-05-20
+links:
+  website: https://supashare.netlify.app/
+  github: realcyguy/supashare

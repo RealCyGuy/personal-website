@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/google-fonts",
     "@formkit/nuxt",
+    "nuxt-icon",
   ],
   googleFonts: {
     families: { "Hanken+Grotesk": [400, 700, 900] },

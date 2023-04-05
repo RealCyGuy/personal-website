@@ -1,0 +1,7 @@
+title: random-mitype
+description: CLI for generating random words for typing tests with mitype.
+tags: [Python]
+date: 2021-06-29
+links:
+  pypi: random-mitype
+  github: realcyguy/random-mitype

@@ -1,0 +1,6 @@
+title: pastel-viewer
+description: A minimal and serverless [Modmail](https://github.com/modmail-dev/modmail) viewer.
+tags: [HTML, CSS, Typescript, Nuxt, Tailwind CSS, MongoDB, Vue]
+date: 2023-03-22
+links:
+  github: realcyguy/pastel-viewer
