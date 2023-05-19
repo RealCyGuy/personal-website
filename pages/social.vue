@@ -63,6 +63,12 @@
         icon="codepen"
         prefix="@"
       />
+      <SocialLink
+        to="https://marketplace.visualstudio.com/publishers/Cyrus"
+        title="Visual Studio Marketplace"
+        username="Cyrus"
+        icon="vscode"
+      />
     </SocialSection>
     <SocialSection title="Interests">
       <SocialLink
