@@ -7,6 +7,10 @@ export default <Partial<Config>>{
       fontFamily: {
         sans: ["Hanken Grotesk", "sans-serif"],
       },
+      animation: {
+        "spin-slow": "spin 8s linear infinite",
+        "spin-slow-reverse": "spin 8s linear infinite reverse",
+      },
     },
   },
   plugins: [formKitTailwind],
