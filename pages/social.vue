@@ -98,6 +98,13 @@
         icon="wikipedia"
         prefix="User:"
       />
+      <SocialLink
+        to="https://anilist.co/user/realcyguy/"
+        title="AniList"
+        username="realcyguy"
+        icon="anilist"
+        prefix="@"
+      />
     </SocialSection>
     <SocialSection title="Social media">
       <SocialLink
@@ -115,12 +122,17 @@
         prefix="@"
       />
       <SocialLink
-        to="https://discord.com/users/543225108135673877 
-"
+        to="https://discord.com/users/543225108135673877"
         title="Discord"
         username="RealCyGuy#1919"
         icon="discord"
         prefix="@"
+      />
+      <SocialLink
+        to="https://www.linkedin.com/in/cyrusyip/"
+        title="LinkedIn"
+        username="cyrusyip"
+        icon="linkedin"
       />
     </SocialSection>
   </div>

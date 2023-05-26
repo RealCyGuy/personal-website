@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="text-xl sm:text-2xl">Hello, I am</span>
-    <h1 class="text-5-xl">Cyrus Yip</h1>
+    <h1>Cyrus Yip</h1>
     <div class="mt-10 mb-14 flex justify-between flex-wrap gap-y-5">
       <p class="text-xl sm:text-2xl">Here is a spinning square:</p>
       <div class="flex-1 px-8">
