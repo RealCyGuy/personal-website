@@ -6,7 +6,7 @@
       <p class="text-xl sm:text-2xl">Here is a spinning square:</p>
       <div class="flex-1 px-8">
         <div
-          class="bg-pink-400 w-1/6 min-w-[5rem] max-w-[8rem] aspect-square m-5 animate-spin-slow mx-auto cursor-pointer relative overflow-hidden"
+          class="bg-pink-400 w-1/6 min-w-[5rem] max-w-[8rem] aspect-square m-5 animate-spin-slow mx-auto cursor-pointer relative overflow-hidden [-webkit-tap-highlight-color:transparent]"
           @click="click"
           :style="`filter: hue-rotate(${degrees}deg)`"
         >
