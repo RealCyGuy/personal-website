@@ -7,6 +7,7 @@
     </h2>
     <div class="max-w-3xl">
       <FormKit type="form" netlify @submit="submit">
+        <input type="hidden" name="form-name" value="contact2" />
         <FormKit
           type="text"
           name="name"
