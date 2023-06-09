@@ -6,6 +6,13 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@formkit/nuxt",
     "nuxt-icon",
+    [
+      "@funken-studio/sitemap-nuxt-3",
+      {
+        generateOnBuild: true,
+        hostname: "https://realcyguy.netlify.app",
+      },
+    ],
   ],
   googleFonts: {
     families: { "Hanken+Grotesk": [400, 700, 900] },
