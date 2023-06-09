@@ -1,42 +1,7 @@
-# Nuxt 3 Minimal Starter
+# Cyrus Yip's Personal Website
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Version 4 of my website is built with Nuxt 3, Tailwind CSS, and Netlify Forms.
 
-## Setup
+You can view the site at [v4--realcyguy.netlify.app](https://v4--realcyguy.netlify.app/).
 
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install --shamefully-hoist
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Past versions: [v1](https://v1--realcyguy.netlify.app/), [v2](https://v2--realcyguy.netlify.app/), [v3](https://v3--realcyguy.netlify.app/). Switch branches to view the source code for each version.
