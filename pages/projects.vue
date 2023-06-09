@@ -13,6 +13,11 @@ useHead({
   title: "Projects",
 });
 
+useServerSeoMeta({
+  description:
+    "An extensive list of projects that Cyrus Yip has made. Showcasing his skills in web design, bot development, and more.",
+});
+
 const { data } = await useAsyncData("projects", () =>
   queryContent<Project>("/projects/").find()
 );

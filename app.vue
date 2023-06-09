@@ -10,4 +10,9 @@ useHead({
     return titleChunk ? `${titleChunk} - Cyrus Yip` : "Cyrus Yip";
   },
 });
+
+useServerSeoMeta({
+  ogSiteName: "Cyrus Yip",
+  themeColor: "#f472b6",
+});
 </script>

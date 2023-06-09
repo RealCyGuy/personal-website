@@ -38,6 +38,10 @@ useHead({
   title: "Contact",
 });
 
+useServerSeoMeta({
+  description: "Contact Cyrus Yip though this form.",
+});
+
 function submit(data: Record<string, string>) {
   fetch("/", {
     method: "POST",

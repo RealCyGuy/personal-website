@@ -59,6 +59,11 @@
 </template>
 
 <script setup lang="ts">
+useServerSeoMeta({
+  description:
+    "Cyrus Yip's personal website. I made this website with Nuxt 3 👍.",
+});
+
 const degrees = ref(0);
 const waves = ref<[number, number, number][]>([]);
 const wave_container = ref<HTMLDivElement>();

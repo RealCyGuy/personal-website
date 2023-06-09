@@ -143,6 +143,11 @@ useHead({
   title: "Social",
 });
 
+useServerSeoMeta({
+  description:
+    "Links to Cyrus Yip's social media and developer profiles. Includes GitHub, Stack Overflow, and more.",
+});
+
 // workaround for https://github.com/vuejs/core/issues/5844
 // animateSocial gets called twice when navigated to
 definePageMeta({
