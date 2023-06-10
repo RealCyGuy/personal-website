@@ -7,7 +7,7 @@
     </h2>
     <div class="max-w-3xl">
       <FormKit type="form" netlify @submit="submit" name="contact2">
-        <input type="hidden" name="form-name" value="contact2" />
+        <FormKit type="hidden" name="form-name" value="contact2" />
         <FormKit
           type="text"
           name="name"
@@ -44,6 +44,7 @@ useServerSeoMeta({
 });
 
 function submit(data: Record<string, string>) {
+  console.log(new URLSearchParams(data).toString());
   fetch("/", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
