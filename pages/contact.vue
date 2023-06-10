@@ -6,7 +6,7 @@
       <SimpleLink to="/social">socials</SimpleLink> or fill out this form below.
     </h2>
     <div class="max-w-3xl">
-      <FormKit type="form" netlify @submit="submit">
+      <FormKit type="form" netlify @submit="submit" name="contact2">
         <input type="hidden" name="form-name" value="contact2" />
         <FormKit
           type="text"
