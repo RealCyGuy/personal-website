@@ -45,7 +45,7 @@ useServerSeoMeta({
 
 function submit(data: Record<string, string>) {
   console.log(new URLSearchParams(data).toString());
-  fetch("/", {
+  fetch("/netlifyformdontgohere.html", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams(data).toString(),
