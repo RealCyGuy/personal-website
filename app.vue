@@ -15,4 +15,15 @@ useServerSeoMeta({
   ogSiteName: "Cyrus Yip",
   themeColor: "#f472b6",
 });
+
+useSchemaOrg([
+  defineWebSite({
+    name: "Cyrus Yip",
+  }),
+  defineWebPage(),
+  definePerson({
+    name: "Cyrus Yip",
+    sameAs: ["https://github.com/realcyguy"],
+  }),
+]);
 </script>
