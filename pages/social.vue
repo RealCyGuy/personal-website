@@ -124,7 +124,7 @@
       <SocialLink
         to="https://discord.com/users/543225108135673877"
         title="Discord"
-        username="RealCyGuy#1919"
+        username="realcyguy"
         icon="discord"
         prefix="@"
       />
