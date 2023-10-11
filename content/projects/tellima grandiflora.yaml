@@ -1,0 +1,7 @@
+title: Tellima grandiflora
+description: Information site about the flowering plant *Tellima grandiflora* created for school.
+tags: [HTML, CSS, Typescript, Nuxt, Tailwind CSS, Vue]
+date: 2023-07-27
+links:
+  website: https://tellima.netlify.app/
+  github: realcyguy/tellima-grandiflora
