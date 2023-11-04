@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mb-5">Projects</h1>
+    <h1 class="title mb-5">Projects</h1>
     <h2 class="mb-3">Here's a list of some things I made.</h2>
     <Project v-for="project in projects" :project="project" />
   </div>

@@ -83,12 +83,14 @@ function toggle() {
 
 const scrollY = ref(0);
 onMounted(() => {
-  animate("nav ol a", { y: [-100, 0] }, { duration: 1, delay: stagger(0.1) });
-  animate(
-    "nav>a, nav button",
-    { opacity: [0, 1] },
-    { duration: 1, delay: stagger(0.5) }
-  );
+  if (route.name != "index") {
+    animate("nav ol a", { y: [-100, 0] }, { duration: 1, delay: stagger(0.1) });
+    animate(
+      "nav>a, nav button",
+      { opacity: [0, 1] },
+      { duration: 1, delay: stagger(0.5) }
+    );
+  }
   // document.body.classList.add("md:static", "md:overflow-y-auto");
   window.addEventListener("scroll", () => {
     scrollY.value = window.scrollY;

@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex sm:gap-3 mb-1 rounded bg-white bg-opacity-0 sm:hover:bg-opacity-5 duration-200 ease-out sm:px-5 py-3 flex-col sm:flex-row"
+    :id="project.title"
   >
     <span class="opacity-90">
       {{ new Date(project.date).getUTCFullYear() }}
@@ -31,7 +32,7 @@
           <NuxtLink
             v-for="link in links"
             :to="link.url"
-            class="hover:text-pink-300 px-1"
+            class="hover:text-pink-300 pl-2"
             target="_blank"
             :aria-label="link.label"
             :title="link.label"

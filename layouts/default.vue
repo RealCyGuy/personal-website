@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-slate-900 text-pink-400 min-h-screen overflow-x-hidden selection:bg-pink-600 selection:bg-opacity-40"
+    class="bg-slate-900 text-pink-400 min-h-screen overflow-x-hidden selection:bg-pink-400 selection:bg-opacity-40"
   >
     <div
       :style="[mounted ? '' : 'display: none']"
@@ -17,16 +17,21 @@
 
 <script setup lang="ts">
 const mounted = ref(false);
+const m = useState("mounted", () => false);
+const route = useRoute();
 onMounted(() => {
   mounted.value = true;
+  if (route.name != "index") {
+    m.value = true;
+  }
 });
 </script>
 
 <style>
 .page-enter-active,
 .page-leave-active,
-.page-enter-active h1,
-.page-leave-active h1 {
+.page-enter-active .title,
+.page-leave-active .title {
   @apply duration-500 ease-in-out;
 }
 
@@ -35,11 +40,11 @@ onMounted(() => {
   @apply opacity-0;
 }
 
-.page-enter-from h1 {
+.page-enter-from .title {
   @apply -translate-x-32;
 }
 
-.page-leave-to h1 {
+.page-leave-to .title {
   @apply translate-x-64;
 }
 </style>

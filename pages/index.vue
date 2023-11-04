@@ -1,110 +1,129 @@
 <template>
   <div>
-    <span class="text-xl sm:text-2xl">Hello, I am</span>
-    <h1>Cyrus Yip</h1>
-    <div class="mt-10 mb-14 flex justify-between flex-wrap gap-y-5">
-      <p class="text-xl sm:text-2xl flex flex-col">
-        <span class="mb-2">Here is a spinning square:</span>
+    <p class="text-5xl font-black">
+      <span class="hello">Hello</span>
+      <span id="words"
+        ><span>, </span><span>I </span><span>am </span>
         <span
-          class="inline-block overflow-hidden duration-[2000ms] transition-[max-height]"
-          :class="clicks < 10 ? 'max-h-0' : 'max-h-16'"
-          >Clicks: {{ clicks }}</span
+          class="title bg-gradient-to-r from-[#9762eb] to-[#e49ef1] inline-block text-transparent bg-clip-text"
         >
+          Cyrus Yip</span
+        ><span>.</span>
+      </span>
+    </p>
+    <div
+      id="content"
+      class="text-xl sm:text-2xl lg:text-3xl flex flex-col mt-10 gap-8"
+    >
+      <span
+        >I was born at a very, very young age. In fact, I was one of the
+        youngest living things during that time.</span
+      >
+      <div>
         <span
-          class="inline-block overflow-hidden duration-[2000ms] transition-[max-height]"
-          :class="clicks < 50 ? 'max-h-0' : 'max-h-16'"
-          >Clicks per second (last 10): {{ cps.toFixed(2) }}</span
+          >Here are 4 random selections out of {{ projects.length }}
+          <SimpleLink to="/projects">projects</SimpleLink> I've created.</span
         >
-        <span
-          class="inline-block overflow-hidden duration-[2000ms] transition-[max-height]"
-          :class="clicks < 100 ? 'max-h-0' : 'max-h-16'"
-          >Average clicks per second: {{ averageCps.toFixed(2) }}</span
-        >
-        <span
-          class="inline-block overflow-hidden duration-[2000ms] transition-[max-height]"
-          :class="loops == 0 ? 'max-h-0' : 'max-h-16'"
-          >Colour loops completed: {{ loops }}</span
-        >
-        <span
-          class="inline-block overflow-hidden duration-[2000ms] transition-[max-height]"
-          :class="clicks < 400 ? 'max-h-0' : 'max-h-16'"
-          >Congrats! There is no more content.</span
-        >
-        <span
-          class="inline-block overflow-hidden duration-[2000ms] transition-[max-height]"
-          :class="clicks < 720 ? 'max-h-0' : 'max-h-16'"
-          >Why are you still clicking.</span
-        >
-      </p>
-      <div class="flex-1 px-8">
         <div
-          class="bg-pink-400 w-1/6 min-w-[5rem] max-w-[8rem] aspect-square m-5 animate-spin-slow mx-auto cursor-pointer relative overflow-hidden [-webkit-tap-highlight-color:transparent]"
-          @click="click"
-          :style="`filter: hue-rotate(${degrees}deg)`"
+          class="text-sm sm:text-base lg:text-lg grid 2xl:grid-cols-2 gap-2 mt-2"
         >
           <div
-            class="animate-spin-slow-reverse w-full h-full"
-            ref="wave_container"
+            v-for="project in projects.slice(0, 4)"
+            class="flex flex-col px-3 py-2 gap-1"
           >
-            <Wave
-              v-for="wave in waves"
-              :style="`left: ${wave[0]}px; top: ${wave[1]}px`"
-              :key="wave[2]"
-            ></Wave>
+            <span>
+              <SimpleLink
+                :to="'/projects#' + project.title"
+                class="font-bold"
+                >{{ project.title }}</SimpleLink
+              >
+              made with
+              <span
+                v-for="(tag, index) in project.tags.sort((a, b) =>
+                  a.localeCompare(b)
+                )"
+              >
+                <span>
+                  {{ tag.replace(" ", "&nbsp;") }}
+                </span>
+                <span
+                  v-if="
+                    index < project.tags.length - 1 && project.tags.length > 2
+                  "
+                  >,
+                </span>
+                <span v-if="index == project.tags.length - 2"> and </span>
+              </span>
+              in {{ new Date(project.date).getUTCFullYear() }}.
+            </span>
+            <span class="opacity-90">{{ project.description }}</span>
           </div>
         </div>
       </div>
+      <span
+        >You can also reach me and view my other stuff in my
+        <SimpleLink to="/social">social links</SimpleLink>. Also,
+        <SimpleLink to="/square">square</SimpleLink>?</span
+      >
+      <span
+        >Feel free to
+        <span class="inline-block overflow-clip">
+          <NuxtLink
+            class="relative after:-z-10 after:bg-gradient-to-br after:from-[#9762eb] after:to-[#e49ef1] after:w-full after:h-full after:absolute after:top-0 after:left-0 after:rounded-full text-slate-900 hover:text-opacity-80 hover:text-white focus:text-opacity-80 focus:text-white px-3 py-1.5 sm:px-6 sm:py-3 rounded-full inline-block z-10 after:duration-500 hover:after:scale-125 focus:after:scale-125 font-bold transition-colors duration-[1500ms]"
+            to="contact"
+            >contact me</NuxtLink
+          ></span
+        >. (I even made it a button!)</span
+      >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { timeline, stagger, spring } from "motion";
+
+import type { Project } from "@/types";
+
 useServerSeoMeta({
   description:
     "Cyrus Yip's personal website. I made this website with Nuxt 3 👍.",
 });
 
-const degrees = ref(0);
-const waves = ref<[number, number, number][]>([]);
-const wave_container = ref<HTMLDivElement>();
-let clicks = 0;
-let loops = 0;
-let cps = 0;
-const clickTimes: number[] = [];
-let beginning: number;
-let averageCps = 0;
+const { data } = await useAsyncData("projects", () =>
+  queryContent<Project>("/projects/").find()
+);
 
-function click(event: MouseEvent) {
-  degrees.value++;
-  if (degrees.value >= 360) {
-    degrees.value = 0;
-    loops++;
-  }
-  if (!wave_container.value) {
-    return;
-  }
-  const rect = wave_container.value.getBoundingClientRect();
-  waves.value.push([
-    event.clientX - rect.left,
-    event.clientY - rect.top,
-    clicks++,
+let projects = data.value!.sort(() => 0.5 - Math.random());
+const m = useState("mounted", () => false);
+
+onMounted(() => {
+  if (m.value) return;
+  m.value = true;
+
+  timeline([
+    [".hello", { color: ["white", "inherit"] }, { duration: 1.5, delay: 0.8 }],
+    [
+      "#words span",
+      { opacity: [0, 1] },
+      { duration: 0.8, delay: stagger(0.15), at: "-0.5" },
+    ],
+    [".title", { color: ["inherit", "transparent"] }, { duration: 3 }],
+    [
+      "#content>span, #content>div>span, #content>div>div>div",
+      { opacity: [0, 1], x: [-40, 0] },
+      { duration: 1.5, delay: stagger(0.2), easing: spring(), at: "<" },
+    ],
+    [
+      "nav ol a",
+      { y: [-100, 0] },
+      { duration: 1, delay: stagger(0.1), at: "-1" },
+    ],
+    [
+      "nav>a, nav button",
+      { opacity: [0, 1] },
+      { duration: 1, delay: stagger(0.5), at: "<" },
+    ],
+    ["footer", { opacity: [0, 1] }, { at: "-0.2" }],
   ]);
-
-  if (!beginning) {
-    beginning = Date.now();
-  }
-
-  clickTimes.push(Date.now());
-  if (clickTimes.length > 10) {
-    clickTimes.shift();
-  }
-  const timeElapsed = clickTimes[clickTimes.length - 1] - clickTimes[0];
-  cps = clickTimes.length / (timeElapsed / 1000);
-  averageCps =
-    clicks / ((clickTimes[clickTimes.length - 1] - beginning) / 1000);
-
-  setTimeout(() => {
-    waves.value.shift();
-  }, 3000);
-}
+});
 </script>
