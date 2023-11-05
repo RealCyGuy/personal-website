@@ -105,6 +105,12 @@
         icon="anilist"
         prefix="@"
       />
+      <SocialLink
+        to="https://www.speedrun.com/users/RealCyGuy"
+        title="Speedrun.com"
+        username="realcyguy"
+        icon="speedruncom"
+      />
     </SocialSection>
     <SocialSection title="Social media">
       <SocialLink
