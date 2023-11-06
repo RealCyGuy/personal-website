@@ -11,6 +11,15 @@
         <slot />
       </div>
       <Footer />
+      <div
+        id="cursor"
+        class="w-3 h-3 rounded-full fixed bg-pink-200 pointer-events-none duration-100 opacity-0 z-50"
+        :class="{
+          'scale-[5]': isCursorPointer,
+          'opacity-20': moved,
+        }"
+        ref="cursor"
+      ></div>
     </div>
   </div>
 </template>
@@ -19,11 +28,52 @@
 const mounted = ref(false);
 const m = useState("mounted", () => false);
 const route = useRoute();
+
+const cursor = ref<HTMLElement | null>(null);
+const isCursorPointer = ref(false);
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+let moved = ref(false);
+
 onMounted(() => {
   mounted.value = true;
   if (route.name != "index") {
     m.value = true;
   }
+
+  document.addEventListener("mouseover", (e) => {
+    const target = e.target as HTMLElement;
+
+    if (window.getComputedStyle(target).cursor === "pointer") {
+      isCursorPointer.value = true;
+    } else {
+      isCursorPointer.value = false;
+    }
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (!moved.value) {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      moved.value = true;
+    }
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+  function updateCursor() {
+    if (cursor.value) {
+      const deltaX = (mouseX - cursorX) * 0.09;
+      const deltaY = (mouseY - cursorY) * 0.09;
+
+      cursorX += deltaX;
+      cursorY += deltaY;
+
+      cursor.value.style.transform = `translate(-50%, -50%) translate(${cursorX}px, ${cursorY}px) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))`;
+    }
+    requestAnimationFrame(updateCursor);
+  }
+  requestAnimationFrame(updateCursor);
 });
 </script>
 
