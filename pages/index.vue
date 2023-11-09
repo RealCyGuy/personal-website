@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-5xl font-black">
+    <h1 class="text-5xl font-black">
       <span class="hello">Hello</span>
       <span id="words"
         ><span>, </span><span>I </span><span>am </span>
@@ -10,7 +10,7 @@
           Cyrus Yip</span
         ><span>.</span>
       </span>
-    </p>
+    </h1>
     <div
       id="content"
       class="text-xl sm:text-2xl lg:text-3xl flex flex-col mt-10 gap-8"
