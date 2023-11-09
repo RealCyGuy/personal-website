@@ -12,6 +12,7 @@
       </div>
       <Footer />
       <div
+        v-if="!usedTouch"
         id="cursor"
         class="w-3 h-3 rounded-full fixed bg-pink-200 pointer-events-none duration-100 opacity-0 z-50"
         :class="{
@@ -36,6 +37,7 @@ let mouseY = 0;
 let cursorX = 0;
 let cursorY = 0;
 let moved = ref(false);
+const usedTouch = ref(false);
 
 onMounted(() => {
   mounted.value = true;
@@ -60,6 +62,9 @@ onMounted(() => {
     }
     mouseX = e.clientX;
     mouseY = e.clientY;
+  });
+  document.addEventListener("touchend", (e) => {
+    usedTouch.value = true;
   });
   function updateCursor() {
     if (cursor.value) {
