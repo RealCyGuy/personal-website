@@ -29,7 +29,7 @@
           <ContentRenderer :value="description" class="prose" />
         </span>
         <div
-          class="flex gap-1 md:gap-0.5 text-lg -translate-x-1 md:translate-x-0 flex-shrink-0 mt-1 md:mt-0"
+          class="flex gap-1 md:gap-0.5 flex-shrink-0 mt-1 md:mt-0 flex-col sm:flex-row"
         >
           <NuxtLink
             v-for="(link, index) in links"
