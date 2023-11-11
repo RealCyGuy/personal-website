@@ -69,7 +69,7 @@
         >Feel free to
         <span class="inline-block overflow-clip">
           <NuxtLink
-            class="relative after:-z-10 after:bg-gradient-to-br after:from-[#9762eb] after:to-[#e49ef1] after:w-full after:h-full after:absolute after:top-0 after:left-0 after:rounded-full text-slate-900 hover:text-opacity-80 hover:text-white focus:text-opacity-80 focus:text-white px-3 py-1.5 sm:px-6 sm:py-3 rounded-full inline-block z-10 after:duration-500 hover:after:scale-125 focus:after:scale-125 font-bold transition-colors duration-[1500ms]"
+            class="relative bg-gradient-to-br from-[#9762eb] to-[#e49ef1] text-slate-900 hover:text-opacity-80 hover:text-white focus:text-opacity-80 focus:text-white px-3 py-1.5 sm:px-6 sm:py-3 rounded-[40px] inline-block z-10 font-bold duration-500 hover:rounded-none focus:rounded-none transition-all"
             to="contact"
             >contact me</NuxtLink
           ></span
