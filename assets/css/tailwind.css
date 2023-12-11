@@ -15,3 +15,7 @@ html {
 body {
   @apply md:!static md:!overflow-y-auto w-full;
 }
+
+* {
+  @apply focus:outline-dashed outline-1 outline-pink-400/90 outline-offset-2;
+}
