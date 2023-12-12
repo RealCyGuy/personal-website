@@ -34,13 +34,13 @@
           <NuxtLink
             v-for="(link, index) in links"
             :to="link.url"
-            class="hover:text-pink-300 flex-1 px-2 py-2 bg-white bg-opacity-5 md:py-0 md:flex-none flex justify-center items-center gap-2 md:gap-1"
+            class="flex-1 px-2.5 py-2 bg-white bg-opacity-5 md:py-0 md:flex-none flex justify-center items-center gap-2 md:gap-1 hover:bg-opacity-10"
             target="_blank"
             :aria-label="link.label"
             :title="link.label"
             :class="{
-              'rounded-l-md': index === 0,
-              'rounded-r-md': index === links.length - 1,
+              'sm:rounded-l-md md:rounded-l': index === 0,
+              'sm:rounded-r-md md:rounded-r': index === links.length - 1,
             }"
           >
             <Icon class="scale-125 md:scale-100" :name="link.icon" />
