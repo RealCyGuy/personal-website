@@ -15,4 +15,7 @@ export default <Partial<Config>>{
   },
   plugins: [formKitTailwind],
   content: ["formkit.config.ts"],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 };
