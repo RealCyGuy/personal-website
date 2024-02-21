@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex md:gap-3 mb-1 rounded bg-white bg-opacity-0 md:hover:bg-opacity-5 duration-200 ease-out md:px-5 py-3 flex-col md:flex-row relative"
+    class="flex md:gap-3 mb-5 md:mb-1 rounded bg-white bg-opacity-0 md:hover:bg-opacity-5 duration-200 ease-out md:px-5 py-3 flex-col md:flex-row relative"
     :id="project.title"
   >
     <span
@@ -18,7 +18,9 @@
       ></div>
     </span>
     <div class="flex justify-between flex-col flex-1">
-      <div class="flex justify-between flex-col md:flex-row mb-1 md:mb-0">
+      <div
+        class="flex justify-between flex-col md:flex-row mb-2 sm:mb-1 md:mb-0"
+      >
         <span class="font-bold">
           {{ project.title }}
         </span>
