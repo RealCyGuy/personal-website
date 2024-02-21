@@ -1,10 +1,21 @@
 <template>
   <div
-    class="flex md:gap-3 mb-1 rounded bg-white bg-opacity-0 md:hover:bg-opacity-5 duration-200 ease-out md:px-5 py-3 flex-col md:flex-row"
+    class="flex md:gap-3 mb-1 rounded bg-white bg-opacity-0 md:hover:bg-opacity-5 duration-200 ease-out md:px-5 py-3 flex-col md:flex-row relative"
     :id="project.title"
   >
-    <span class="opacity-90">
+    <span
+      class="opacity-90 flex md:flex-col justify-between md:justify-normal items-center text-center gap-2"
+    >
       {{ new Date(project.date).getUTCFullYear() }}
+      <div
+        class="w-10 md:w-2/3 h-1.5 rounded-full"
+        :class="{
+          'bg-green-400':
+            project.status == null || project.status === ProjectStatus.Active,
+          'bg-gray-400': project.status === ProjectStatus.Paused,
+          'bg-red-500': project.status === ProjectStatus.Offline,
+        }"
+      ></div>
     </span>
     <div class="flex justify-between flex-col flex-1">
       <div class="flex justify-between flex-col md:flex-row mb-1 md:mb-0">
@@ -53,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { Project } from "@/types";
+import { Project, ProjectStatus } from "@/types";
 import { transformContent } from "@nuxt/content/transformers";
 
 const props = defineProps<{
