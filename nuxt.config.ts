@@ -10,10 +10,10 @@ export default defineNuxtConfig({
       "@funken-studio/sitemap-nuxt-3",
       {
         generateOnBuild: true,
-        hostname: "https://realcyguy.netlify.app",
+        hostname: "https://cyrusyip.com",
       },
     ],
-    ["nuxt-schema-org", { host: "https://realcyguy.netlify.app" }],
+    ["nuxt-schema-org", { host: "https://cyrusyip.com" }],
   ],
   googleFonts: {
     families: { "Hanken+Grotesk": [400, 700, 900] },

@@ -3,8 +3,8 @@
     <div class="py-16 flex justify-center flex-col items-center">
       <p class="mb-4">
         &copy; {{ year }}
-        <SimpleLink to="https://realcyguy.netlify.app">Cyrus Yip</SimpleLink>.
-        All rights reserved.
+        <SimpleLink to="https://cyrusyip.com">Cyrus Yip</SimpleLink>. All rights
+        reserved.
       </p>
       <p class="mb-4">
         Source code on

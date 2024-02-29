@@ -1,3 +1,11 @@
 [build]
   command = "yarn build"
   publish = "dist"
+
+[[redirects]]
+  from = "https://realcyguy.netlify.app/*"
+  to = "https://cyrusyip.com/:splat"
+
+[[redirects]]
+  from = "https://v4--realcyguy.netlify.app/*"
+  to = "https://cyrusyip.com/:splat"
