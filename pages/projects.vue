@@ -59,8 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { ProjectStatus } from "@/types";
-import type { Project } from "@/types";
+import { ProjectStatus, type Project } from "@/types";
 
 useHead({
   title: "Projects",
@@ -72,7 +71,7 @@ useServerSeoMeta({
 });
 
 const { data } = await useAsyncData("projects", () =>
-  queryContent<Project>("/projects/").find()
+  queryContent<Project>("/projects/").find(),
 );
 
 let projects = data.value!;
@@ -85,7 +84,7 @@ const filteredProjects = computed(() => {
     return projects;
   }
   const filter: ProjectStatus = ["Active", "Paused", "Stopped"].indexOf(
-    filters.value[0]
+    filters.value[0],
   );
   return projects.filter((project) => {
     const status = project.status ?? ProjectStatus.Active;

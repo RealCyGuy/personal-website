@@ -27,7 +27,7 @@
         <span class="md:max-w-[50%] md:text-right break-keep">
           <span
             v-for="(tag, index) in project.tags.sort((a, b) =>
-              a.localeCompare(b)
+              a.localeCompare(b),
             )"
           >
             <span class="opacity-95 hover:opacity-100 duration-50">
@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { Project, ProjectStatus } from "@/types";
+import { type Project, ProjectStatus } from "@/types";
 import { transformContent } from "@nuxt/content/transformers";
 
 const props = defineProps<{
@@ -75,7 +75,7 @@ const props = defineProps<{
 
 const description = await transformContent(
   "content:dummy.md",
-  props.project.description
+  props.project.description,
 );
 
 let links: { label: string; icon: string; url: string }[] = [];

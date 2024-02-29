@@ -13,7 +13,7 @@ export default defineNuxtConfig({
         hostname: "https://cyrusyip.com",
       },
     ],
-    ["nuxt-schema-org", { host: "https://cyrusyip.com" }],
+    "nuxt-schema-org",
   ],
   googleFonts: {
     families: { "Hanken+Grotesk": [400, 700, 900] },
@@ -42,5 +42,8 @@ export default defineNuxtConfig({
       ],
     },
     pageTransition: { name: "page", mode: "out-in" },
+  },
+  site: {
+    url: "https://cyrusyip.com",
   },
 });
