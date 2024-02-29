@@ -5,7 +5,9 @@
 [[redirects]]
   from = "https://realcyguy.netlify.app/*"
   to = "https://cyrusyip.com/:splat"
+  force = true
 
 [[redirects]]
   from = "https://v4--realcyguy.netlify.app/*"
   to = "https://cyrusyip.com/:splat"
+  force = true
