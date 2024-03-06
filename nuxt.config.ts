@@ -6,14 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@formkit/nuxt",
     "nuxt-icon",
-    [
-      "@funken-studio/sitemap-nuxt-3",
-      {
-        generateOnBuild: true,
-        hostname: "https://cyrusyip.com",
-      },
-    ],
-    ["nuxt-schema-org", { host: "https://cyrusyip.com" }],
+    "@nuxtjs/seo",
   ],
   googleFonts: {
     families: { "Hanken+Grotesk": [400, 700, 900] },
@@ -40,7 +33,17 @@ export default defineNuxtConfig({
         },
         { rel: "manifest", href: "/site.webmanifest" },
       ],
+      templateParams: {
+        titleTemplate: "%s %separator %siteName",
+        separator: "-",
+      },
     },
     pageTransition: { name: "page", mode: "out-in" },
+  },
+  site: {
+    url: "https://cyrusyip.com",
+    name: "Cyrus Yip",
+    description: "Cyrus Yip's personal website.",
+    defaultLocale: "en",
   },
 });

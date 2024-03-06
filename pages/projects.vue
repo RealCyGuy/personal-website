@@ -71,7 +71,7 @@ useServerSeoMeta({
 });
 
 const { data } = await useAsyncData("projects", () =>
-  queryContent<Project>("/projects/").find(),
+  queryContent<Project>("projects").find(),
 );
 
 let projects = data.value!;
