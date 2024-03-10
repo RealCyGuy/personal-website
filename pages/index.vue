@@ -40,7 +40,7 @@
               made with
               <span
                 v-for="(tag, index) in project.tags.sort((a, b) =>
-                  a.localeCompare(b)
+                  a.localeCompare(b),
                 )"
               >
                 <span>
@@ -90,7 +90,7 @@ useServerSeoMeta({
 });
 
 const { data } = await useAsyncData("projects", () =>
-  queryContent<Project>("/projects/").find()
+  queryContent<Project>("projects").find(),
 );
 
 let projects = data.value!.sort(() => 0.5 - Math.random());
