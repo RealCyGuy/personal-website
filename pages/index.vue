@@ -93,7 +93,9 @@ const { data } = await useAsyncData("projects", () =>
   queryContent<Project>("projects").find(),
 );
 
-let projects = data.value!.sort(() => 0.5 - Math.random());
+const { data: projects } = await useAsyncData("randomprojects", () =>
+  Promise.resolve(data.value!.sort(() => 0.5 - Math.random())),
+);
 const m = useState("mounted", () => false);
 
 onMounted(() => {
