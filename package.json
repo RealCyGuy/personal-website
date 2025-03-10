@@ -13,7 +13,7 @@
     "@nuxt/icon": "^1.5.1",
     "@nuxtjs/seo": "^2.0.0-rc.10",
     "@nuxtjs/tailwindcss": "^6.11.4",
-    "nuxt": "^3.13.1",
+    "nuxt": "^3.16.0",
     "nuxt-gtag": "^3.0.1",
     "prettier": "3.2.5"
   },
