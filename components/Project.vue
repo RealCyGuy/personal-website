@@ -38,7 +38,7 @@
       </div>
       <div class="flex justify-between flex-col md:flex-row md:items-end">
         <span class="opacity-90">
-          <ContentRenderer :value="description" class="prose" />
+          <ContentRenderer :value="description" />
         </span>
         <div
           class="flex gap-1 md:gap-0.5 flex-shrink-0 mt-1 md:mt-0 flex-col sm:flex-row"
