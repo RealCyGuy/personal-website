@@ -1,14 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
+    "@nuxtjs/seo",
     "@nuxt/content",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/google-fonts",
     "@formkit/nuxt",
     "@nuxt/icon",
-    "@nuxtjs/seo",
     "@hypernym/nuxt-gsap",
     "nuxt-gtag",
+    "@nuxtjs/mdc",
   ],
 
   googleFonts: {
@@ -54,4 +55,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   gsap: { extraPlugins: { scrollTrigger: true, flip: true, text: true } },
   compatibilityDate: "2024-09-15",
+
+  // https://github.com/nuxt-modules/mdc/issues/314#issuecomment-2560720188
+  vite: {
+    optimizeDeps: {
+      include: ["debug"],
+    },
+  },
 });

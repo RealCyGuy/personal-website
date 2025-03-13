@@ -10,10 +10,9 @@
       <div
         class="w-10 md:w-2/3 h-1.5 rounded-full"
         :class="{
-          'bg-green-400':
-            project.status == null || project.status === ProjectStatus.Active,
-          'bg-gray-400': project.status === ProjectStatus.Paused,
-          'bg-red-500': project.status === ProjectStatus.Offline,
+          'bg-green-400': project.status == null || project.status === 'Active',
+          'bg-gray-400': project.status === 'Paused',
+          'bg-red-500': project.status === 'Offline',
         }"
       ></div>
     </span>
@@ -66,17 +65,13 @@
 </template>
 
 <script setup lang="ts">
-import { type Project, ProjectStatus } from "@/types";
-import { transformContent } from "@nuxt/content/transformers";
+import type { ProjectsCollectionItem } from "@nuxt/content";
 
 const props = defineProps<{
-  project: Project;
+  project: ProjectsCollectionItem;
 }>();
 
-const description = await transformContent(
-  "content:dummy.md",
-  props.project.description,
-);
+const description = await parseMarkdown(props.project.description);
 
 let links: { label: string; icon: string; url: string }[] = [];
 for (const key in props.project.links) {
