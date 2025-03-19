@@ -39,13 +39,13 @@
           <input
             class="appearance-none peer focus:outline-none"
             type="checkbox"
-            id="Stopped"
-            value="Stopped"
+            id="Offline"
+            value="Offline"
             v-model="filters"
           />
           <label
             class="peer-checked:bg-opacity-20 rounded px-3 py-1 bg-white bg-opacity-0 inline-flex items-center justify-center gap-2 cursor-pointer duration-500 hover:bg-opacity-10 peer-focus-visible:outline-dashed"
-            for="Stopped"
+            for="Offline"
             ><div class="w-2 h-2 bg-red-500 rounded-full"></div>
             Offline</label
           >
@@ -55,7 +55,7 @@
     <div class="projects flex flex-col gap-5 md:gap-1">
       <div
         v-for="project in projects"
-        :key="project._id"
+        :key="project.id"
         class="project duration-0"
         ref="itemRefs"
         :data-gg="project.title"
@@ -67,8 +67,6 @@
 </template>
 
 <script setup lang="ts">
-import { ProjectStatus, type Project } from "@/types";
-
 const { $gsap, $Flip, $ScrollTrigger } = useNuxtApp();
 
 useHead({
@@ -80,9 +78,9 @@ useSeoMeta({
     "An extensive list of projects that Cyrus Yip has made. Showcases his skills in web design, bot development, and more.",
 });
 
-const { data } = await useAsyncData("projects", () =>
-  queryContent<Project>("projects").find(),
-);
+const { data } = await useAsyncData("projects", () => {
+  return queryCollection("projects").all();
+});
 
 let projects = data.value!;
 projects.sort((a, b) => {
@@ -104,14 +102,12 @@ watch(filters, () => {
           item.classList.remove("hidden");
         }
       } else {
-        const filter: ProjectStatus = ["Active", "Paused", "Stopped"].indexOf(
-          filters.value[0],
-        );
+        const filter = filters.value[0];
 
         for (const item of itemRefs.value) {
           const project = projects.find((p) => p.title === item.dataset.gg);
           if (project) {
-            const status = project.status ?? ProjectStatus.Active;
+            const status = project.status ?? "Active";
             if (status === filter) {
               item.classList.remove("hidden");
             } else {

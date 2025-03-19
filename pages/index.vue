@@ -183,17 +183,15 @@
 <script setup lang="ts">
 import { Application } from "@splinetool/runtime";
 
-import type { Project } from "@/types";
-
 useSeoMeta({
   description:
     "Cyrus Yip's personal website. I am a developer, designer, and word 3.",
 });
 
 const m = useState("mounted", () => false);
-const { data } = await useAsyncData("projects", () =>
-  queryContent<Project>("projects").find(),
-);
+const { data } = await useAsyncData("projects", () => {
+  return queryCollection("projects").all();
+});
 
 const { data: projects } = await useAsyncData("randomprojects", () =>
   Promise.resolve(data.value!.sort(() => 0.5 - Math.random())),
