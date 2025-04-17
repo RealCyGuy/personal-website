@@ -169,12 +169,14 @@
         >
       </div>
     </section>
-    <section class="min-h-screen flex justify-center items-center">
-      <div class="auto-mx">
-        <Split
-          text="Why do people choose to sleep? I think... It is because they're afraid to awaken from the dream."
-          class="end-text text-3xl flex-1 max-w-screen-2xl leading-none gap-x-2"
-        />
+    <section class="h-[150vh] end-section">
+      <div class="min-h-screen flex justify-center items-center sticky top-0">
+        <div class="auto-mx">
+          <Split
+            text="Why do people choose to sleep? I think... It is because they're afraid to awaken from the dream."
+            class="end-text text-3xl flex-1 max-w-screen-2xl leading-none gap-x-2"
+          />
+        </div>
       </div>
     </section>
   </div>
@@ -283,9 +285,9 @@ onMounted(() => {
     opacity: 0,
     stagger: 0.1,
     scrollTrigger: {
-      trigger: ".end-text",
-      start: "top bottom",
-      end: "top 50%",
+      trigger: ".end-section",
+      start: "top 50%",
+      end: "bottom 80%",
       scrub: true,
     },
   });
