@@ -903,6 +903,51 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@iconify-json/grommet-icons@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@iconify-json/grommet-icons@npm:1.2.1"
+  dependencies:
+    "@iconify/types": "npm:*"
+  checksum: 10c0/b15d5c42bc29667134c691be908070d3dd9812b92e473d5505e078be34b557cdc865a1f79864b5bd1a35f6281ac28634cf1a64d09b1fa674512c058d0e3a4a4e
+  languageName: node
+  linkType: hard
+
+"@iconify-json/ic@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@iconify-json/ic@npm:1.2.2"
+  dependencies:
+    "@iconify/types": "npm:*"
+  checksum: 10c0/2c31ecded4d03300468d69fd15dac391242dcce80c6468313ec6a25e032e7e9996573bba683fe84524d6b52aa0e6e0a67dcbaabd7f8a1ec04a031d4ebefa2811
+  languageName: node
+  linkType: hard
+
+"@iconify-json/mdi@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@iconify-json/mdi@npm:1.2.3"
+  dependencies:
+    "@iconify/types": "npm:*"
+  checksum: 10c0/4d11426abba03464e5ebe4675c87cc39c720e54b7c28265ff9ccd93f229a51f7616bb0a8f1c01412eac3cc9a1ebdc0a122bbaa3395c14d30834d96f8a141e96d
+  languageName: node
+  linkType: hard
+
+"@iconify-json/ph@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@iconify-json/ph@npm:1.2.2"
+  dependencies:
+    "@iconify/types": "npm:*"
+  checksum: 10c0/a8e3a276364a125bdaefab07ae78425113baa34c11b22b4c33ab8ac01fd13c5ee8afccbb26f1a1aaaabd1681ed68dc6eb791df2d41d18724cab1362c61d3cd37
+  languageName: node
+  linkType: hard
+
+"@iconify-json/simple-icons@npm:^1.2.36":
+  version: 1.2.36
+  resolution: "@iconify-json/simple-icons@npm:1.2.36"
+  dependencies:
+    "@iconify/types": "npm:*"
+  checksum: 10c0/6e4fb2a29ee797aa2373f88b9bd4b4f86cfbfbdf0347334a70b11e0c8e6a219ff9b11ded6160b58fb0c3ad8cc84a48abfb378fa9a26de6c3b19280cb786e2b12
+  languageName: node
+  linkType: hard
+
 "@iconify/collections@npm:^1.0.455":
   version: 1.0.460
   resolution: "@iconify/collections@npm:1.0.460"
@@ -10324,6 +10369,11 @@ __metadata:
     "@formkit/nuxt": "npm:^1.5.9"
     "@formkit/themes": "npm:^1.5.9"
     "@hypernym/nuxt-gsap": "npm:^2.4.2"
+    "@iconify-json/grommet-icons": "npm:^1.2.1"
+    "@iconify-json/ic": "npm:^1.2.2"
+    "@iconify-json/mdi": "npm:^1.2.3"
+    "@iconify-json/ph": "npm:^1.2.2"
+    "@iconify-json/simple-icons": "npm:^1.2.36"
     "@nuxt/content": "npm:^3.3.0"
     "@nuxt/icon": "npm:^1.5.1"
     "@nuxtjs/google-fonts": "npm:^3.1.3"
