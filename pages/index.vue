@@ -190,6 +190,17 @@ useSeoMeta({
     "Cyrus Yip's personal website. I am a developer, designer, and word 3.",
 });
 
+useHead({
+  link: [
+    {
+      rel: "preload",
+      href: "https://prod.spline.design/SF3SvGwvtSuhzyIm/scene.splinecode",
+      as: "fetch",
+      crossorigin: "anonymous",
+    },
+  ],
+});
+
 const m = useState("mounted", () => false);
 const { data } = await useAsyncData("projects", () => {
   return queryCollection("projects").all();
@@ -307,7 +318,9 @@ onMounted(() => {
   const canvas = document.getElementById("canvas3d")! as HTMLCanvasElement;
   app = new Application(canvas);
   app
-    .load("https://prod.spline.design/SF3SvGwvtSuhzyIm/scene.splinecode")
+    .load(
+      "https://prod.spline.design/SF3SvGwvtSuhzyIm/scene.splinecode"
+    )
     .then(() => {
       let mm = $gsap.matchMedia();
       mm.add({ big: "(min-width: 768px)" }, (context) => {
