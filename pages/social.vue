@@ -108,6 +108,13 @@
         icon="anilist"
         prefix="@"
       />
+      <SocialLink
+        to="https://manifold.markets/Cy"
+        title="Manifold"
+        username="Cy"
+        icon="manifold"
+        prefix="@"
+      />
     </SocialSection>
     <SocialSection title="Social media">
       <SocialLink
