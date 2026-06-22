@@ -200,6 +200,8 @@ const { data: projects } = await useAsyncData("randomprojects", () =>
 const { $gsap, $ScrollTrigger } = useNuxtApp();
 let animationFrameId: number | null = null;
 let removeCanvasEvents: (() => void) | null = null;
+let observer: IntersectionObserver | null = null;
+let resizeTimer: NodeJS.Timeout | null = null;
 const first = ref<HTMLElement | null>(null);
 
 function setup() {
@@ -237,13 +239,13 @@ onMounted(() => {
     repeat: -1,
   });
 
-  let resizeTimer: NodeJS.Timeout;
-  addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
+  const handleGsapResize = () => {
+    if (resizeTimer) clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       setup();
     }, 100);
-  });
+  };
+  window.addEventListener("resize", handleGsapResize);
 
   $gsap.to(".name-container", {
     x: "-50%",
@@ -310,10 +312,10 @@ onMounted(() => {
   let height = canvas.clientHeight;
 
   // Set initial canvas resolution
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = width * dpr;
   canvas.height = height * dpr;
-  ctx.scale(dpr, dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   // Math Setup: regular icosahedron
   const phi = (1 + Math.sqrt(5)) / 2;
@@ -384,23 +386,46 @@ onMounted(() => {
   const geoVertices = subdivided.vertices;
   const geoFaces = subdivided.faces;
 
+  const numVertices = geoVertices.length;
+  const morphedRotated = new Float32Array(numVertices * 3);
+  const projected = new Float32Array(numVertices * 2);
 
+  interface FaceData {
+    indices: number[];
+    centerZ: number;
+    centerX: number;
+    centerY: number;
+    normal: { x: number; y: number; z: number };
+  }
+  const facesData: FaceData[] = geoFaces.map((f) => ({
+    indices: f,
+    centerZ: 0,
+    centerX: 0,
+    centerY: 0,
+    normal: { x: 0, y: 0, z: 0 },
+  }));
 
   // State
   let time = 0;
   let windowMouseX = 0;
   let windowMouseY = 0;
   let isMouseOver = false;
+  let hasInteracted = false;
 
   let tiltX = 0;
   let tiltY = 0;
   let autoAngleX = 0;
   let autoAngleY = 0;
 
+  let currentLx = 0;
+  let currentLy = 0;
+  let currentLz = -3.0;
+
   const onMouseMove = (e: MouseEvent) => {
     windowMouseX = e.clientX - window.innerWidth / 2;
     windowMouseY = e.clientY - window.innerHeight / 2;
     isMouseOver = true;
+    hasInteracted = true;
   };
 
   const onMouseLeave = () => {
@@ -412,12 +437,13 @@ onMounted(() => {
       windowMouseX = e.touches[0].clientX - window.innerWidth / 2;
       windowMouseY = e.touches[0].clientY - window.innerHeight / 2;
       isMouseOver = true;
+      hasInteracted = true;
     }
   };
 
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("mouseleave", onMouseLeave);
-  window.addEventListener("touchmove", onTouchMove);
+  window.addEventListener("touchmove", onTouchMove, { passive: true });
   window.addEventListener("touchend", onMouseLeave);
 
   removeCanvasEvents = () => {
@@ -425,16 +451,17 @@ onMounted(() => {
     window.removeEventListener("mouseleave", onMouseLeave);
     window.removeEventListener("touchmove", onTouchMove);
     window.removeEventListener("touchend", onMouseLeave);
+    window.removeEventListener("resize", handleGsapResize);
   };
 
   const handleResize = () => {
     const rect = canvas.getBoundingClientRect();
     width = rect.width;
     height = rect.height;
-    const d = window.devicePixelRatio || 1;
+    const d = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = width * d;
     canvas.height = height * d;
-    ctx.scale(d, d);
+    ctx.setTransform(d, 0, 0, d, 0, 0);
   };
 
   window.addEventListener("resize", handleResize);
@@ -443,6 +470,20 @@ onMounted(() => {
     originalRemoveEvents();
     window.removeEventListener("resize", handleResize);
   };
+
+  let isCanvasVisible = true;
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        isCanvasVisible = entry.isIntersecting;
+        if (isCanvasVisible && !animationFrameId) {
+          tick();
+        }
+      });
+    },
+    { threshold: 0 }
+  );
+  observer.observe(canvas);
 
   // Vertex morphing function (low amplitude to prevent excessive deformation while keeping facets alive)
   function getMorphingVertex(v: [number, number, number], t: number): [number, number, number] {
@@ -456,6 +497,11 @@ onMounted(() => {
 
   // Animation Loop
   function tick() {
+    if (!isCanvasVisible) {
+      animationFrameId = null;
+      return;
+    }
+
     time += 0.005;
 
     // Smooth tilt interpolation (dampened for smoother, less sensitive response)
@@ -475,8 +521,7 @@ onMounted(() => {
     const cosY = Math.cos(currentAngleY), sinY = Math.sin(currentAngleY);
 
     // Compute morphed and rotated vertices
-    const morphedRotated: [number, number, number][] = [];
-    for (let i = 0; i < geoVertices.length; i++) {
+    for (let i = 0; i < numVertices; i++) {
       const mv = getMorphingVertex(geoVertices[i], time);
 
       // Rotate Y
@@ -489,7 +534,10 @@ onMounted(() => {
       const y2 = y1 * cosX - z1 * sinX;
       const z2 = y1 * sinX + z1 * cosX;
 
-      morphedRotated.push([x2, y2, z2]);
+      const idx = i * 3;
+      morphedRotated[idx] = x2;
+      morphedRotated[idx + 1] = y2;
+      morphedRotated[idx + 2] = z2;
     }
 
     // Dynamic base radius based on screen size
@@ -497,35 +545,38 @@ onMounted(() => {
     const D = 4.0; // Camera distance
 
     // Project vertices
-    const projected: [number, number][] = [];
-    for (let i = 0; i < morphedRotated.length; i++) {
-      const mr = morphedRotated[i];
-      const px = (mr[0] * baseRadius * D) / (D + mr[2]) + width / 2;
-      const py = (mr[1] * baseRadius * D) / (D + mr[2]) + height / 2;
-      projected.push([px, py]);
+    for (let i = 0; i < numVertices; i++) {
+      const mrIdx = i * 3;
+      const mrX = morphedRotated[mrIdx];
+      const mrY = morphedRotated[mrIdx + 1];
+      const mrZ = morphedRotated[mrIdx + 2];
+      const px = (mrX * baseRadius * D) / (D + mrZ) + width / 2;
+      const py = (mrY * baseRadius * D) / (D + mrZ) + height / 2;
+      
+      const pIdx = i * 2;
+      projected[pIdx] = px;
+      projected[pIdx + 1] = py;
     }
 
     // Compute faces data
-    interface FaceData {
-      indices: number[];
-      centerZ: number;
-      centerX: number;
-      centerY: number;
-      normal: { x: number; y: number; z: number };
-    }
-    const facesData: FaceData[] = [];
-    for (let i = 0; i < geoFaces.length; i++) {
-      const f = geoFaces[i];
-      const r1 = morphedRotated[f[0]];
-      const r2 = morphedRotated[f[1]];
-      const r3 = morphedRotated[f[2]];
+    for (let i = 0; i < facesData.length; i++) {
+      const face = facesData[i];
+      const f = face.indices;
+      
+      const r1Idx = f[0] * 3;
+      const r2Idx = f[1] * 3;
+      const r3Idx = f[2] * 3;
 
-      const cx = (r1[0] + r2[0] + r3[0]) / 3;
-      const cy = (r1[1] + r2[1] + r3[1]) / 3;
-      const cz = (r1[2] + r2[2] + r3[2]) / 3;
+      const r1X = morphedRotated[r1Idx], r1Y = morphedRotated[r1Idx + 1], r1Z = morphedRotated[r1Idx + 2];
+      const r2X = morphedRotated[r2Idx], r2Y = morphedRotated[r2Idx + 1], r2Z = morphedRotated[r2Idx + 2];
+      const r3X = morphedRotated[r3Idx], r3Y = morphedRotated[r3Idx + 1], r3Z = morphedRotated[r3Idx + 2];
 
-      const ux = r2[0] - r1[0], uy = r2[1] - r1[1], uz = r2[2] - r1[2];
-      const vx = r3[0] - r1[0], vy = r3[1] - r1[1], vz = r3[2] - r1[2];
+      const cx = (r1X + r2X + r3X) / 3;
+      const cy = (r1Y + r2Y + r3Y) / 3;
+      const cz = (r1Z + r2Z + r3Z) / 3;
+
+      const ux = r2X - r1X, uy = r2Y - r1Y, uz = r2Z - r1Z;
+      const vx = r3X - r1X, vy = r3Y - r1Y, vz = r3Z - r1Z;
 
       let nx = uy * vz - uz * vy;
       let ny = uz * vx - ux * vz;
@@ -537,29 +588,39 @@ onMounted(() => {
       const dot = nx * cx + ny * cy + nz * cz;
       if (dot < 0) { nx = -nx; ny = -ny; nz = -nz; }
 
-      facesData.push({
-        indices: f,
-        centerZ: cz,
-        centerX: cx,
-        centerY: cy,
-        normal: { x: nx, y: ny, z: nz }
-      });
+      face.centerX = cx;
+      face.centerY = cy;
+      face.centerZ = cz;
+      face.normal.x = nx;
+      face.normal.y = ny;
+      face.normal.z = nz;
     }
 
     // Sort faces descending by depth Z (largest Z first = furthest back)
     facesData.sort((a, b) => b.centerZ - a.centerZ);
 
     // Light source setup (relative to viewer space)
-    let lx = 0, ly = 0, lz = -3.0;
+    let targetLx = 0;
+    let targetLy = 0;
+    let targetLz = -3.0;
+
     if (isMouseOver) {
-      lx = (windowMouseX / (window.innerWidth / 2)) * 1.6;
-      ly = (windowMouseY / (window.innerHeight / 2)) * 1.6;
-      lz = -3.5;
+      targetLx = (windowMouseX / (window.innerWidth / 2)) * 1.6;
+      targetLy = (windowMouseY / (window.innerHeight / 2)) * 1.6;
+      targetLz = -3.5;
+    } else if (!hasInteracted) {
+      targetLx = 2.0 * Math.sin(time * 0.7);
+      targetLy = 2.0 * Math.cos(time * 0.7);
+      targetLz = -3.0;
     } else {
-      lx = 2.0 * Math.sin(time * 0.7);
-      ly = 2.0 * Math.cos(time * 0.7);
-      lz = -3.0;
+      targetLx = currentLx;
+      targetLy = currentLy;
+      targetLz = currentLz;
     }
+
+    currentLx += (targetLx - currentLx) * 0.08;
+    currentLy += (targetLy - currentLy) * 0.08;
+    currentLz += (targetLz - currentLz) * 0.08;
 
     // Clear Canvas
     ctx.clearRect(0, 0, width, height);
@@ -570,9 +631,9 @@ onMounted(() => {
       const n = face.normal;
 
       // Vector from center to light
-      let dx = lx - face.centerX;
-      let dy = ly - face.centerY;
-      let dz = lz - face.centerZ;
+      let dx = currentLx - face.centerX;
+      let dy = currentLy - face.centerY;
+      let dz = currentLz - face.centerZ;
       const dlen = Math.sqrt(dx * dx + dy * dy + dz * dz);
       if (dlen > 0) { dx /= dlen; dy /= dlen; dz /= dlen; }
 
@@ -613,14 +674,14 @@ onMounted(() => {
 
       // Draw face
       const fIdx = face.indices;
-      const p1 = projected[fIdx[0]];
-      const p2 = projected[fIdx[1]];
-      const p3 = projected[fIdx[2]];
+      const p1Idx = fIdx[0] * 2;
+      const p2Idx = fIdx[1] * 2;
+      const p3Idx = fIdx[2] * 2;
 
       ctx.beginPath();
-      ctx.moveTo(p1[0], p1[1]);
-      ctx.lineTo(p2[0], p2[1]);
-      ctx.lineTo(p3[0], p3[1]);
+      ctx.moveTo(projected[p1Idx], projected[p1Idx + 1]);
+      ctx.lineTo(projected[p2Idx], projected[p2Idx + 1]);
+      ctx.lineTo(projected[p3Idx], projected[p3Idx + 1]);
       ctx.closePath();
 
       // 0.86 opacity so we see back-faces glowing inside
@@ -682,6 +743,9 @@ onUnmounted(() => {
   }
   if (removeCanvasEvents) {
     removeCanvasEvents();
+  }
+  if (observer) {
+    observer.disconnect();
   }
 });
 </script>
