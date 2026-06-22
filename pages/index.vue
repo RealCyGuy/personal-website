@@ -2,11 +2,11 @@
   <div>
     <div class="relative overflow-clip [clip-path:inset(0)]">
       <div
-        class="w-full h-svh fixed left-0 top-0 ml-auto sm:flex z-10 pointer-events-none hidden"
+        class="w-full h-svh fixed left-0 top-0 ml-auto flex z-10 pointer-events-none"
       >
         <div class="h-full w-full md:w-2/3 md:translate-x-1/2">
           <canvas
-            id="canvas3d"
+            id="visual-canvas"
             class="h-full w-full relative opacity-0"
           ></canvas>
         </div>
@@ -183,22 +183,9 @@
 </template>
 
 <script setup lang="ts">
-import { Application } from "@splinetool/runtime";
-
 useSeoMeta({
   description:
     "Cyrus Yip's personal website. I am a developer, designer, and word 3.",
-});
-
-useHead({
-  link: [
-    {
-      rel: "preload",
-      href: "https://prod.spline.design/SF3SvGwvtSuhzyIm/scene.splinecode",
-      as: "fetch",
-      crossorigin: "anonymous",
-    },
-  ],
 });
 
 const m = useState("mounted", () => false);
@@ -211,7 +198,8 @@ const { data: projects } = await useAsyncData("randomprojects", () =>
 );
 
 const { $gsap, $ScrollTrigger } = useNuxtApp();
-let app: Application | null = null;
+let animationFrameId: number | null = null;
+let removeCanvasEvents: (() => void) | null = null;
 const first = ref<HTMLElement | null>(null);
 
 function setup() {
@@ -315,54 +303,385 @@ onMounted(() => {
     });
   });
 
-  const canvas = document.getElementById("canvas3d")! as HTMLCanvasElement;
-  app = new Application(canvas);
-  app
-    .load(
-      "https://prod.spline.design/SF3SvGwvtSuhzyIm/scene.splinecode"
-    )
-    .then(() => {
-      let mm = $gsap.matchMedia();
-      mm.add({ big: "(min-width: 768px)" }, (context) => {
-        $gsap.to("#canvas3d", {
-          x: context!.conditions!.big ? "-25%" : "0%",
-          scrollTrigger: {
-            trigger: ".intro-text",
-            start: "bottom 60%",
-            end: "bottom 20%",
-            scrub: 0.5,
-          },
-        });
+  const canvas = document.getElementById("visual-canvas")! as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d")!;
+
+  let width = canvas.clientWidth;
+  let height = canvas.clientHeight;
+
+  // Set initial canvas resolution
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  ctx.scale(dpr, dpr);
+
+  // Math Setup: regular icosahedron
+  const phi = (1 + Math.sqrt(5)) / 2;
+  const baseVertices: [number, number, number][] = [
+    [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
+    [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
+    [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1]
+  ];
+
+  baseVertices.forEach(v => {
+    const len = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+    v[0] /= len;
+    v[1] /= len;
+    v[2] /= len;
+  });
+
+  const baseFaces = [
+    [0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11],
+    [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
+    [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9],
+    [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]
+  ];
+
+  function subdivide(vertices: [number, number, number][], faces: number[][]): { vertices: [number, number, number][], faces: number[][] } {
+    const newVertices = [...vertices];
+    const newFaces: number[][] = [];
+    const midpointCache = new Map<string, number>();
+
+    function getMidpoint(p1Idx: number, p2Idx: number): number {
+      const key = p1Idx < p2Idx ? `${p1Idx}_${p2Idx}` : `${p2Idx}_${p1Idx}`;
+      if (midpointCache.has(key)) return midpointCache.get(key)!;
+
+      const p1 = vertices[p1Idx];
+      const p2 = vertices[p2Idx];
+      let mx = p1[0] + p2[0];
+      let my = p1[1] + p2[1];
+      let mz = p1[2] + p2[2];
+      const len = Math.sqrt(mx * mx + my * my + mz * mz);
+      mx /= len;
+      my /= len;
+      mz /= len;
+
+      newVertices.push([mx, my, mz]);
+      const idx = newVertices.length - 1;
+      midpointCache.set(key, idx);
+      return idx;
+    }
+
+    for (const face of faces) {
+      const a = face[0];
+      const b = face[1];
+      const c = face[2];
+
+      const ab = getMidpoint(a, b);
+      const bc = getMidpoint(b, c);
+      const ca = getMidpoint(c, a);
+
+      newFaces.push([a, ab, ca]);
+      newFaces.push([b, bc, ab]);
+      newFaces.push([c, ca, bc]);
+      newFaces.push([ab, bc, ca]);
+    }
+
+    return { vertices: newVertices, faces: newFaces };
+  }
+
+  const subdivided = subdivide(baseVertices, baseFaces);
+  const geoVertices = subdivided.vertices;
+  const geoFaces = subdivided.faces;
+
+
+
+  // State
+  let time = 0;
+  let windowMouseX = 0;
+  let windowMouseY = 0;
+  let isMouseOver = false;
+
+  let tiltX = 0;
+  let tiltY = 0;
+  let autoAngleX = 0;
+  let autoAngleY = 0;
+
+  const onMouseMove = (e: MouseEvent) => {
+    windowMouseX = e.clientX - window.innerWidth / 2;
+    windowMouseY = e.clientY - window.innerHeight / 2;
+    isMouseOver = true;
+  };
+
+  const onMouseLeave = () => {
+    isMouseOver = false;
+  };
+
+  const onTouchMove = (e: TouchEvent) => {
+    if (e.touches.length > 0) {
+      windowMouseX = e.touches[0].clientX - window.innerWidth / 2;
+      windowMouseY = e.touches[0].clientY - window.innerHeight / 2;
+      isMouseOver = true;
+    }
+  };
+
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("mouseleave", onMouseLeave);
+  window.addEventListener("touchmove", onTouchMove);
+  window.addEventListener("touchend", onMouseLeave);
+
+  removeCanvasEvents = () => {
+    window.removeEventListener("mousemove", onMouseMove);
+    window.removeEventListener("mouseleave", onMouseLeave);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("touchend", onMouseLeave);
+  };
+
+  const handleResize = () => {
+    const rect = canvas.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    const d = window.devicePixelRatio || 1;
+    canvas.width = width * d;
+    canvas.height = height * d;
+    ctx.scale(d, d);
+  };
+
+  window.addEventListener("resize", handleResize);
+  const originalRemoveEvents = removeCanvasEvents;
+  removeCanvasEvents = () => {
+    originalRemoveEvents();
+    window.removeEventListener("resize", handleResize);
+  };
+
+  // Vertex morphing function (low amplitude to prevent excessive deformation while keeping facets alive)
+  function getMorphingVertex(v: [number, number, number], t: number): [number, number, number] {
+    const x = v[0], y = v[1], z = v[2];
+    const scale = 1.0 + 
+      0.025 * Math.sin(2.2 * x + 1.6 * y + 1.0 * t) +
+      0.020 * Math.cos(1.8 * z - 1.2 * x + 1.2 * t) +
+      0.015 * Math.sin(2.8 * y + 2.0 * z + 1.7 * t);
+    return [x * scale, y * scale, z * scale];
+  }
+
+  // Animation Loop
+  function tick() {
+    time += 0.005;
+
+    // Smooth tilt interpolation (dampened for smoother, less sensitive response)
+    const targetTiltX = isMouseOver ? -(windowMouseY / (window.innerHeight / 2)) * 0.20 : 0;
+    const targetTiltY = isMouseOver ? (windowMouseX / (window.innerWidth / 2)) * 0.20 : 0;
+    tiltX += (targetTiltX - tiltX) * 0.04;
+    tiltY += (targetTiltY - tiltY) * 0.04;
+
+    autoAngleX += 0.0015;
+    autoAngleY += 0.0035;
+
+    const currentAngleX = autoAngleX + tiltX;
+    const currentAngleY = autoAngleY + tiltY;
+
+    // Rotation matrices
+    const cosX = Math.cos(currentAngleX), sinX = Math.sin(currentAngleX);
+    const cosY = Math.cos(currentAngleY), sinY = Math.sin(currentAngleY);
+
+    // Compute morphed and rotated vertices
+    const morphedRotated: [number, number, number][] = [];
+    for (let i = 0; i < geoVertices.length; i++) {
+      const mv = getMorphingVertex(geoVertices[i], time);
+
+      // Rotate Y
+      const x1 = mv[0] * cosY + mv[2] * sinY;
+      const y1 = mv[1];
+      const z1 = -mv[0] * sinY + mv[2] * cosY;
+
+      // Rotate X
+      const x2 = x1;
+      const y2 = y1 * cosX - z1 * sinX;
+      const z2 = y1 * sinX + z1 * cosX;
+
+      morphedRotated.push([x2, y2, z2]);
+    }
+
+    // Dynamic base radius based on screen size
+    const baseRadius = Math.min(width, height) * 0.36;
+    const D = 4.0; // Camera distance
+
+    // Project vertices
+    const projected: [number, number][] = [];
+    for (let i = 0; i < morphedRotated.length; i++) {
+      const mr = morphedRotated[i];
+      const px = (mr[0] * baseRadius * D) / (D + mr[2]) + width / 2;
+      const py = (mr[1] * baseRadius * D) / (D + mr[2]) + height / 2;
+      projected.push([px, py]);
+    }
+
+    // Compute faces data
+    interface FaceData {
+      indices: number[];
+      centerZ: number;
+      centerX: number;
+      centerY: number;
+      normal: { x: number; y: number; z: number };
+    }
+    const facesData: FaceData[] = [];
+    for (let i = 0; i < geoFaces.length; i++) {
+      const f = geoFaces[i];
+      const r1 = morphedRotated[f[0]];
+      const r2 = morphedRotated[f[1]];
+      const r3 = morphedRotated[f[2]];
+
+      const cx = (r1[0] + r2[0] + r3[0]) / 3;
+      const cy = (r1[1] + r2[1] + r3[1]) / 3;
+      const cz = (r1[2] + r2[2] + r3[2]) / 3;
+
+      const ux = r2[0] - r1[0], uy = r2[1] - r1[1], uz = r2[2] - r1[2];
+      const vx = r3[0] - r1[0], vy = r3[1] - r1[1], vz = r3[2] - r1[2];
+
+      let nx = uy * vz - uz * vy;
+      let ny = uz * vx - ux * vz;
+      let nz = ux * vy - uy * vx;
+
+      const len = Math.sqrt(nx * nx + ny * ny + nz * nz);
+      if (len > 0) { nx /= len; ny /= len; nz /= len; }
+
+      const dot = nx * cx + ny * cy + nz * cz;
+      if (dot < 0) { nx = -nx; ny = -ny; nz = -nz; }
+
+      facesData.push({
+        indices: f,
+        centerZ: cz,
+        centerX: cx,
+        centerY: cy,
+        normal: { x: nx, y: ny, z: nz }
       });
-      $gsap.to("#canvas3d", {
-        scale: 0.5,
-        scrollTrigger: {
-          trigger: ".intro-text",
-          start: "top 50%",
-          end: "bottom 50%",
-          scrub: true,
-        },
-      });
-      $gsap.to(canvas, { opacity: 1, duration: 0.5, delay: 0.5 }).then(() => {
-        $gsap.to("#canvas3d", {
-          opacity: 0.8,
-          scrollTrigger: {
-            trigger: ".names",
-            start: "bottom bottom",
-            end: "top top",
-            scrub: true,
-          },
-        });
-      });
+    }
+
+    // Sort faces descending by depth Z (largest Z first = furthest back)
+    facesData.sort((a, b) => b.centerZ - a.centerZ);
+
+    // Light source setup (relative to viewer space)
+    let lx = 0, ly = 0, lz = -3.0;
+    if (isMouseOver) {
+      lx = (windowMouseX / (window.innerWidth / 2)) * 1.6;
+      ly = (windowMouseY / (window.innerHeight / 2)) * 1.6;
+      lz = -3.5;
+    } else {
+      lx = 2.0 * Math.sin(time * 0.7);
+      ly = 2.0 * Math.cos(time * 0.7);
+      lz = -3.0;
+    }
+
+    // Clear Canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Render loop
+    for (let i = 0; i < facesData.length; i++) {
+      const face = facesData[i];
+      const n = face.normal;
+
+      // Vector from center to light
+      let dx = lx - face.centerX;
+      let dy = ly - face.centerY;
+      let dz = lz - face.centerZ;
+      const dlen = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      if (dlen > 0) { dx /= dlen; dy /= dlen; dz /= dlen; }
+
+      let diffuse = n.x * dx + n.y * dy + n.z * dz;
+      diffuse = Math.max(0, diffuse);
+
+      // Specular highlight: view dir is (0,0,-1)
+      let hx = dx;
+      let hy = dy;
+      let hz = dz - 1.0;
+      const hlen = Math.sqrt(hx * hx + hy * hy + hz * hz);
+      if (hlen > 0) { hx /= hlen; hy /= hlen; hz /= hlen; }
+
+      let specular = n.x * hx + n.y * hy + n.z * hz;
+      specular = Math.max(0, specular);
+      specular = Math.pow(specular, 16);
+
+      const totalLight = 0.18 + 0.82 * diffuse;
+
+      // Color mapping
+      let r, g, b;
+      if (totalLight < 0.5) {
+        const t = totalLight / 0.5;
+        r = 7 + t * (68 - 7);
+        g = 14 + t * (106 - 14);
+        b = 28 + t * (218 - 28);
+      } else {
+        const t = (totalLight - 0.5) / 0.5;
+        r = 68 + t * (130 - 68);
+        g = 106 + t * (162 - 106);
+        b = 218 + t * (255 - 218);
+      }
+
+      // Add specular white glow
+      r = Math.min(255, r + specular * 170);
+      g = Math.min(255, g + specular * 170);
+      b = Math.min(255, b + specular * 240);
+
+      // Draw face
+      const fIdx = face.indices;
+      const p1 = projected[fIdx[0]];
+      const p2 = projected[fIdx[1]];
+      const p3 = projected[fIdx[2]];
+
+      ctx.beginPath();
+      ctx.moveTo(p1[0], p1[1]);
+      ctx.lineTo(p2[0], p2[1]);
+      ctx.lineTo(p3[0], p3[1]);
+      ctx.closePath();
+
+      // 0.86 opacity so we see back-faces glowing inside
+      ctx.fillStyle = `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, 0.86)`;
+      ctx.fill();
+
+      // Draw edge lines
+      ctx.strokeStyle = `rgba(130, 162, 255, ${0.12 + specular * 0.4})`;
+      ctx.lineWidth = 0.55;
+      ctx.stroke();
+    }
+
+    animationFrameId = requestAnimationFrame(tick);
+  }
+
+  // Start loop
+  tick();
+
+  let mm = $gsap.matchMedia();
+  mm.add({ big: "(min-width: 768px)" }, (context) => {
+    $gsap.to("#visual-canvas", {
+      x: context!.conditions!.big ? "-25%" : "0%",
+      scrollTrigger: {
+        trigger: ".intro-text",
+        start: "bottom 60%",
+        end: "bottom 20%",
+        scrub: 0.5,
+      },
     });
+  });
+  $gsap.to("#visual-canvas", {
+    scale: 0.5,
+    scrollTrigger: {
+      trigger: ".intro-text",
+      start: "top 50%",
+      end: "bottom 50%",
+      scrub: true,
+    },
+  });
+  $gsap.to(canvas, { opacity: 1, duration: 0.5, delay: 0.5 }).then(() => {
+    $gsap.to("#visual-canvas", {
+      opacity: 0.8,
+      scrollTrigger: {
+        trigger: ".names",
+        start: "bottom bottom",
+        end: "top top",
+        scrub: true,
+      },
+    });
+  });
 
   if (m.value) return;
   m.value = true;
 });
 
 onUnmounted(() => {
-  if (app) {
-    app.dispose();
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+  if (removeCanvasEvents) {
+    removeCanvasEvents();
   }
 });
 </script>
