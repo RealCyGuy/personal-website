@@ -4,7 +4,10 @@ node_modules
 .nitro
 .cache
 .output
+.wrangler
 .env
+.dev.vars
+.dev.vars.*
 dist
 .pnp.*
 .yarn/*
