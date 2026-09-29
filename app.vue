@@ -15,6 +15,4 @@ useSchemaOrg([
     sameAs: ["https://github.com/realcyguy"],
   }),
 ]);
-
-defineOgImage("Custom");
 </script>

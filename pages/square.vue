@@ -73,9 +73,10 @@ useHead({
   title: "Square",
 });
 
-useSeoMeta({
-  description: "A spinning square?",
-});
+const description = "A spinning square?";
+
+useSeoMeta({ description });
+defineOgImage("Custom", { description });
 
 const degrees = ref(0);
 const waves = ref<[number, number, number][]>([]);
