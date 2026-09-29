@@ -10,8 +10,7 @@
       <SimpleLink to="/social">socials</SimpleLink> or fill out this form below!
     </h2>
     <div class="max-w-3xl">
-      <FormKit type="form" netlify @submit="submit" name="contact2">
-        <FormKit type="hidden" name="form-name" value="contact2" />
+      <FormKit type="form" @submit="submit">
         <FormKit
           type="text"
           name="name"
@@ -49,25 +48,34 @@ const description =
 useSeoMeta({ description });
 defineOgImage("Custom", { description });
 
-function submit(data: Record<string, string>) {
-  console.log(new URLSearchParams(data).toString());
-  fetch("/netlifyformdontgohere.html", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(data).toString(),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        alert("Form submission failed!\n" + response.statusText);
-        return;
-      }
-      const button = document.querySelector(
-        "[type=submit]",
-      ) as HTMLButtonElement;
+async function submit(data: Record<string, string>) {
+  try {
+    const response = await fetch("https://formspree.io/f/myezlpve", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const result = await response.json().catch(() => null);
+      const errorMessage =
+        result?.errors?.map((e: { message: string }) => e.message).join(", ") ||
+        response.statusText;
+      alert("Form submission failed!\n" + errorMessage);
+      return;
+    }
+
+    const button = document.querySelector("[type=submit]") as HTMLButtonElement;
+    if (button) {
       button.textContent = "Submitted!";
       button.disabled = true;
-    })
-    .catch((error) => alert(error));
+    }
+  } catch (error) {
+    alert(error);
+  }
 }
 
 onMounted(handleAnimation);
