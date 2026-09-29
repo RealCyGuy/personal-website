@@ -1,8 +1,0 @@
-title: wikimagehow
-description: Random images from wikihow.
-tags: [HTML, CSS, Javascript, Tailwind CSS, Netlify Functions]
-date: 2021-01-16
-links:
-  website: https://wikimagehow.netlify.app
-  github: realcyguy/wikimagehow
-status: Paused

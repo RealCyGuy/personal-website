@@ -1,7 +1,0 @@
-title: spotifypoem
-description: Script to create a Spotify playlist from song lyrics (or other text)!
-tags: [Python]
-date: 2024-06-18
-links:
-  github: realcyguy/spotifypoem
-status: Active
