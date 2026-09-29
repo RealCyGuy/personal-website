@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{ description?: string }>(), {
-  description: "description",
-});
+defineProps<{ description: string }>();
 </script>
 
 <template>

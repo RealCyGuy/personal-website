@@ -183,10 +183,11 @@
 </template>
 
 <script setup lang="ts">
-useSeoMeta({
-  description:
-    "Cyrus Yip's personal website. I am a developer, designer, and word 3.",
-});
+const description =
+  "Cyrus Yip's personal website. I am a developer, designer, and word 3.";
+
+useSeoMeta({ description });
+defineOgImage("Custom", { description });
 
 const m = useState("mounted", () => false);
 const { data } = await useAsyncData("projects", () => {

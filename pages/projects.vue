@@ -73,10 +73,11 @@ useHead({
   title: "Projects",
 });
 
-useSeoMeta({
-  description:
-    "An extensive list of projects that Cyrus Yip has made. Showcases his skills in web design, bot development, and more.",
-});
+const description =
+  "An extensive list of projects that Cyrus Yip has made. Showcases his skills in web design, bot development, and more.";
+
+useSeoMeta({ description });
+defineOgImage("Custom", { description });
 
 const { data } = await useAsyncData("projects", () => {
   return queryCollection("projects").all();

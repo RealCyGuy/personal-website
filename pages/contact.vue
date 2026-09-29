@@ -43,10 +43,11 @@ useHead({
   title: "Contact",
 });
 
-useSeoMeta({
-  description:
-    "Contact Cyrus Yip though this custom form! (or use something else)",
-});
+const description =
+  "Contact Cyrus Yip though this custom form! (or use something else)";
+
+useSeoMeta({ description });
+defineOgImage("Custom", { description });
 
 function submit(data: Record<string, string>) {
   console.log(new URLSearchParams(data).toString());

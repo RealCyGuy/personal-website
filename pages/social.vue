@@ -214,10 +214,11 @@ useHead({
   title: "Social",
 });
 
-useSeoMeta({
-  description:
-    "Links to Cyrus Yip's social media and developer profiles. Includes GitHub, Stack Overflow, and more.",
-});
+const description =
+  "Links to Cyrus Yip's social media and developer profiles. Includes GitHub, Stack Overflow, and more.";
+
+useSeoMeta({ description });
+defineOgImage("Custom", { description });
 
 const { $gsap, $ScrollTrigger } = useNuxtApp();
 
