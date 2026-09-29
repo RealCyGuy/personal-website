@@ -12,6 +12,14 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
   ],
 
+  nitro: {
+    preset: "cloudflare-pages-static",
+    prerender: {
+      crawlLinks: true,
+      routes: ["/"],
+    },
+  },
+
   googleFonts: {
     families: { "Hanken+Grotesk": [400, 700, 900] },
   },
