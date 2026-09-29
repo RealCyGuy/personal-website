@@ -16,5 +16,5 @@ useSchemaOrg([
   }),
 ]);
 
-defineOgImageComponent("Custom");
+defineOgImage("Custom");
 </script>
