@@ -16,6 +16,12 @@ export default defineNuxtConfig({
     families: { "Hanken+Grotesk": [400, 700, 900] },
   },
 
+  content: {
+    experimental: {
+      sqliteConnector: "native",
+    },
+  },
+
   app: {
     head: {
       link: [
