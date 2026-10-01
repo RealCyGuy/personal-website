@@ -12,6 +12,14 @@ export default defineNuxtConfig({
     "@comark/nuxt",
   ],
 
+  icon: {
+    provider: "iconify",
+    serverBundle: false,
+    clientBundle: {
+      scan: true,
+    },
+  },
+
   nitro: {
     preset: "cloudflare-pages-static",
     prerender: {
