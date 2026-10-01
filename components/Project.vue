@@ -38,7 +38,7 @@
       </div>
       <div class="flex justify-between flex-col md:flex-row md:items-end">
         <span class="opacity-90">
-          <ContentRenderer :value="description" />
+          <Markdown :value="project.description" />
         </span>
         <div
           class="flex gap-1 md:gap-0.5 flex-shrink-0 mt-1 md:mt-0 flex-col sm:flex-row"
@@ -70,8 +70,6 @@ import type { ProjectsCollectionItem } from "@nuxt/content";
 const props = defineProps<{
   project: ProjectsCollectionItem;
 }>();
-
-const description = await parseMarkdown(props.project.description);
 
 let links: { label: string; icon: string; url: string }[] = [];
 for (const key in props.project.links) {
