@@ -69,4 +69,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   gsap: { extraPlugins: { scrollTrigger: true, flip: true, text: true } },
   compatibilityDate: "2024-09-15",
+
+  // https://github.com/nuxt-modules/mdc/issues/314#issuecomment-2560720188
+  vite: {
+    optimizeDeps: {
+      include: ["debug"],
+    },
+  },
 });
