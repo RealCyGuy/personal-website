@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     preset: "cloudflare-pages-static",
     prerender: {
       crawlLinks: true,
-      routes: ["/"],
+      routes: ["/", "/sitemap.xml"],
     },
   },
 
