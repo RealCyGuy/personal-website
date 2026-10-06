@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "personal-website",
+  "compatibility_date": "2026-10-03",
+  "assets": {
+    "directory": "./.output/public",
+    "not_found_handling": "404-page",
+  },
+}

@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: "cloudflare-pages-static",
+    preset: "static",
     prerender: {
       crawlLinks: true,
       routes: ["/", "/sitemap.xml"],
