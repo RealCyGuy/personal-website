@@ -19,6 +19,7 @@ export default defineContentConfig({
           npm: z.string().optional(),
         }),
         status: z.enum(["Active", "Paused", "Offline"]).optional(),
+        star: z.boolean().optional(),
       }),
     }),
   },

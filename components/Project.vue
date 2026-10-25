@@ -20,8 +20,15 @@
       <div
         class="flex justify-between flex-col md:flex-row mb-2 sm:mb-1 md:mb-0"
       >
-        <span class="font-bold">
-          {{ project.title }}
+        <span class="font-bold inline-flex items-center gap-1.5">
+          <span>{{ project.title }}</span>
+          <Icon
+            v-if="project.star"
+            name="ph:star-fill"
+            class="text-amber-400 text-sm flex-shrink-0"
+            aria-label="Featured project"
+            title="Featured project"
+          />
         </span>
         <span class="md:max-w-[50%] md:text-right break-keep">
           <span
