@@ -1,0 +1,26 @@
+nav.site-nav {
+  flex-wrap: wrap;
+  gap: 1rem;
+  opacity: 1;
+}
+.site-nav ol {
+  position: static;
+  width: auto;
+  height: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  visibility: visible;
+  opacity: 1;
+  gap: 0.75rem;
+}
+.site-nav ol a {
+  margin-bottom: 0;
+}
+.site-nav button,
+.project-filters.flex {
+  display: none;
+}
+h3.opacity-0,
+.social-link.opacity-0 {
+  opacity: 1;
+}

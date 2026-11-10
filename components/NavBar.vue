@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex justify-between px-5 py-8 text-lg fixed w-full top-0 overflow-hidden md:px-10 z-20 opacity-0"
+    class="site-nav flex justify-between px-5 py-8 text-lg fixed w-full top-0 overflow-hidden md:px-10 z-20 opacity-0"
   >
     <div class="flex">
       <NuxtLink to="/" class="md:px-3 hover-underline">

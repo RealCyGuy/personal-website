@@ -2,9 +2,11 @@
   <div class="auto-mx">
     <h1 class="title mb-5">Projects</h1>
     <h2 class="mb-3">Here's a list of some things I made.</h2>
-    <div class="flex gap-2 mb-5 flex-wrap items-center">
+    <div class="project-filters flex gap-2 mb-5 flex-wrap items-center">
       <div class="flex gap-x-1 items-center flex-wrap">
-        <div class="flex gap-0.5 bg-white bg-opacity-5 p-1 rounded-sm flex-wrap">
+        <div
+          class="flex gap-0.5 bg-white bg-opacity-5 p-1 rounded-sm flex-wrap"
+        >
           <div>
             <input
               class="appearance-none peer focus:outline-none"
@@ -78,7 +80,7 @@
         v-for="project in projects"
         :key="project.id"
         class="project duration-0"
-            :class="{ hidden: star && !project.star }"
+        :class="{ hidden: star && !project.star }"
         ref="itemRefs"
         :data-gg="project.title"
       >

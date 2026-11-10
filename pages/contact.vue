@@ -10,7 +10,12 @@
       <SimpleLink to="/social">socials</SimpleLink> or fill out this form below!
     </h2>
     <div class="max-w-3xl">
-      <FormKit type="form" @submit="submit">
+      <FormKit
+        type="form"
+        method="POST"
+        action="https://formspree.io/f/myezlpve"
+        @submit="submit"
+      >
         <FormKit
           type="text"
           name="name"

@@ -5,6 +5,10 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  noscript: [{ innerHTML: '<link rel="stylesheet" href="/noscript.css">' }],
+});
+
 useSeoMeta({
   themeColor: "#446ada",
 });
